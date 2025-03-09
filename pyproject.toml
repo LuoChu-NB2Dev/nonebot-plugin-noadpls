@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "nonebot-plugin-example"
+version = "0.0.0"  # 将被动态替换
+description = "Template plugin project"
+authors = ["gongfuture <gongfuture@outlook.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "nonebot_plugin_example"}]
+
+[tool.poetry.urls]
+homepage = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-example"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4.0"
+nonebot2 = ">=2.4.1"
+nonebot-plugin-alconna = ">=0.54.2"
+
+[tool.poetry.group.dev.dependencies]
+# 开发依赖
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.poetry_dynamic_versioning]
+enable = true
+vcs = "git"
+pattern = '(?:__version__ = ["\'])([^"\']+)(?:["\'])'
+path = "nonebot_plugin_example/__init__.py"
