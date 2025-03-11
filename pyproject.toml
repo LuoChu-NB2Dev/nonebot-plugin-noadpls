@@ -14,6 +14,7 @@ homepage = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls"
 python = ">=3.9,<4.0"
 nonebot2 = ">=2.4.1"
 nonebot-plugin-alconna = ">=0.54.2"
+nonebot-plugin-localstore = "^0.7.4"
 paddleocr = ">=2.10.0"
 
 [tool.poetry.group.dev.dependencies]
