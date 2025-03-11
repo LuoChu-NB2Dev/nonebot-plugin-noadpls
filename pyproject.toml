@@ -27,4 +27,4 @@ build-backend = "poetry_dynamic_versioning.backend"
 enable = true
 vcs = "git"
 pattern = """(?:__version__ = ["'])([^"']+)(?:["'])"""
-path = "nonebot_plugin_noadpls/__init__.py"
+path = "nonebot_plugin_noadpls/_version.py"
