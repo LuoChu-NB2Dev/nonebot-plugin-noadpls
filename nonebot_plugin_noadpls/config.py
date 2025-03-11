@@ -20,9 +20,8 @@ class PrefixModel(BaseModel):
     noadpls: EnvConfigModel
 
 
-class ConfigModel(LocalConfigModel, PrefixModel):
+class ConfigModel(BaseModel):
     """配置合并"""
-
 
 
 # 获取.env插件配置
