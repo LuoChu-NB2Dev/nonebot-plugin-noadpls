@@ -30,3 +30,18 @@ enable = true
 vcs = "git"
 pattern = """(?:__version__ = ["'])([^"']+)(?:["'])"""
 path = "nonebot_plugin_noadpls/_version.py"
+
+[[tool.poetry.source]]
+name = "清华"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "阿里云"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "豆瓣"
+url = "https://pypi.doubanio.com/simple/"
+priority = "primary"
