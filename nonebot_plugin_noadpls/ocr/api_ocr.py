@@ -1,3 +1,6 @@
+
+# Original by https://github.com/canxin121/nonebot_paddle_ocr/blob/main/nonebot_paddle_ocr/api_ocr.py
+
 import hashlib
 from typing import Optional
 import requests
