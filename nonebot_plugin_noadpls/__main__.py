@@ -3,14 +3,12 @@ from .utils.log import log
 from .utils.cache import save_cache, load_cache, cache_exists
 from .ocr import *
 from nonebot.adapters.onebot.v11 import GROUP as V11GROUP, MessageEvent as V11MessageEvent
-from nonebot_plugin_alconna import on_alconna, Alconna, Args, Image, Match
 from nonebot.exception import MatcherException
+from nonebot.typing import T_State
 from nonebot import on_message
 from typing import Any
 import httpx
-from nonebot import require
 
-require("nonebot_plugin_alconna")
 
 # from nonebot.adapters.onebot.v12 import GROUP as V12GROUP, MessageEvent as V12MessageEvent
 # from typing import Union
@@ -30,15 +28,16 @@ matcher = on_message(
 
 
 @matcher.handle()
-async def handle_image_message(
+async def handle_message(
     event: MessageEvent,
+    state: T_State
 ):
     if event.post_type == "message":
         getmsg = event.message
         ocr_result = ""
         raw_text = ""
         full_text = ""
-        log.debug(f"{getmsg}")
+        # log.debug(f"{getmsg}")
         for segment in getmsg:
             if segment.type == "image":
 
@@ -84,11 +83,11 @@ async def handle_image_message(
                     try:
                         # 尝试使用在线OCR（更可靠）
                         try:
-                            ocr_text = online_ocr(image_data)
-                        except Exception as e:
-                            log.warning(f"在线OCR失败: {e}，尝试本地OCR")
-                            # 如果在线OCR失败，尝试本地OCR
                             ocr_text = local_ocr(image_data, ocr_result_cache_key)
+                        except Exception as e:
+                            log.warning(f"本地OCR失败: {e}，尝试在线OCR")
+                            # 如果在线OCR失败，尝试本地OCR
+                            ocr_text = online_ocr(image_data, ocr_result_cache_key)
                     except Exception as e:
                         log.error(f"OCR识别失败: {e}")
                         await matcher.finish()
