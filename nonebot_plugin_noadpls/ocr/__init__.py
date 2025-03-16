@@ -1,4 +1,4 @@
-from .api_ocr import api_paddle_ocr as online_ocr
+from .api_ocr import online_ocr as online_ocr
 from .ocr import recognize_image as local_ocr
 
 __all__ = [
