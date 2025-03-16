@@ -1,8 +1,6 @@
 # ruff: noqa: E402
 
-from nonebot.plugin import PluginMetadata, inherit_supported_adapters, require
-
-require("nonebot_plugin_alconna")
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
 from . import __main__ as __main__
 from .config import ConfigModel
@@ -15,6 +13,6 @@ __plugin_meta__ = PluginMetadata(
     type="application",
     homepage="https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls",
     config=ConfigModel,
-    supported_adapters=inherit_supported_adapters("nonebot_plugin_alconna"),
+    supported_adapters=inherit_supported_adapters("nonebot_plugin_localstore"),
     extra={"License": "MIT", "Author": "gongfuture"},
 )
