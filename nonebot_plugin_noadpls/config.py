@@ -1,13 +1,14 @@
 import yaml
+from typing import Optional
 from nonebot import get_plugin_config
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel
 
-from .utils import log, StorePath
+from .utils import log, GetStorePath
 
 class LocalConfigModel(BaseModel):
     """localstore插件 可变动配置项"""
-    some_setting: str = "默认值"
-    enable_feature: bool = True
+    # some_setting: str = "默认值"
+    # enable_feature: bool = True
 
 
 class EnvConfigModel(BaseModel):
@@ -17,7 +18,7 @@ class EnvConfigModel(BaseModel):
 
 class PrefixModel(BaseModel):
     """前缀配置"""
-    noadpls: EnvConfigModel
+    noadpls: Optional[EnvConfigModel] = None
 
 
 class ConfigModel(BaseModel):
@@ -28,7 +29,7 @@ class ConfigModel(BaseModel):
 env_config = get_plugin_config(PrefixModel)
 
 # 配置文件路径
-CONFIG_PATH = StorePath.CONFIG_FILE
+CONFIG_PATH = GetStorePath.CONFIG_FILE
 
 
 def load_config() -> ConfigModel:

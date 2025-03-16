@@ -54,3 +54,11 @@ priority = "primary"
 name = "豆瓣"
 url = "https://pypi.doubanio.com/simple/"
 priority = "primary"
+
+[tool.nonebot]
+adapters = [
+    { name = "OneBot V11", module_name = "nonebot.adapters.onebot.v11" },
+]
+plugins = ["nonebot_plugin_noadpls"]
+plugin_dirs = []
+builtin_plugins = []
