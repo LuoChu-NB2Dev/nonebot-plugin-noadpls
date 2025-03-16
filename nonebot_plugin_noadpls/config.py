@@ -1,6 +1,6 @@
 import yaml
-from typing import Optional
-from nonebot import get_plugin_config
+from typing import Optional, List
+from nonebot import get_plugin_config, get_driver
 from pydantic import BaseModel
 
 from .utils import log, GetStorePath
@@ -9,11 +9,11 @@ class LocalConfigModel(BaseModel):
     """localstore插件 可变动配置项"""
     # some_setting: str = "默认值"
     # enable_feature: bool = True
+    ban_time: List[int] = [60, 300, 1800, 3600, 86400]
 
 
 class EnvConfigModel(BaseModel):
     """env读取 不可变动配置项"""
-    pass
 
 
 class PrefixModel(BaseModel):
@@ -27,6 +27,8 @@ class ConfigModel(BaseModel):
 
 # 获取.env插件配置
 env_config = get_plugin_config(PrefixModel)
+
+global_config = get_driver().config
 
 # 配置文件路径
 CONFIG_PATH = GetStorePath.CONFIG_FILE
