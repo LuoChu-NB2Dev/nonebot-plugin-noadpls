@@ -3,7 +3,8 @@ from .constants import  GetStorePath, CacheConstants
 
 # 导出所有公共接口
 __all__ = ["Log", "log", 
-           "GetStorePath","CacheConstants"
+           "GetStorePath","CacheConstants",
+           "mute_sb"
            ]
 
 
@@ -13,11 +14,11 @@ __all__ = ["Log", "log",
 from nonebot.adapters.onebot.v11 import GroupMessageEvent, ActionFailed, Bot
 from nonebot.matcher import Matcher
 from typing import Union, Optional
-from ..config import  global_config, config
+from ..config import  global_config
 
 su = global_config.superusers
 
-async def mute_sb(bot: Bot, gid: int, lst: list, time: Optional[int] = None, scope: Optional[list] = None):
+async def mute_sb(bot: Bot, gid: int, lst: list, time: int = 60):
     """
     构造禁言
     :param gid: 群号
@@ -29,11 +30,6 @@ async def mute_sb(bot: Bot, gid: int, lst: list, time: Optional[int] = None, sco
     if 'all' in lst:
         yield bot.set_group_whole_ban(group_id=gid, enable=True)
     else:
-        if time is None:
-            if scope is None:
-                time = random.randint(config.ban_rand_time_min, plugin_config.ban_rand_time_max)
-            else:
-                time = random.randint(scope[0], scope[1])
         for qq in lst:
             if int(qq) in su or str(qq) in su:
                 log.info(f"SUPERUSER无法被禁言, {qq}")
