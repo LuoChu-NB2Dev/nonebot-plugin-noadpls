@@ -1,19 +1,31 @@
 from typing import Optional, Union, Any
-
+import inspect
 from nonebot.log import logger
 
 
 class Log:
     """日志记录器"""
 
-    def __init__(self, name: Optional[str] = "nonebot_plugin_noadpls") -> None:
+    def __init__(self, name: Optional[str] = None) -> None:
         """
         初始化日志记录器
         
         Args:
-            name: 记录器名称，默认为插件名
+            name: 记录器名称，默认为自动检测调用模块名
         """
-        self.name = name
+        if name is None:
+            # 自动检测调用模块名
+            frame = inspect.stack()[1]
+            module = inspect.getmodule(frame[0])
+            if module:
+                # 获取完整模块路径
+                module_path = module.__name__
+                self.name = module_path[(module_path.find(".")):]
+            else:
+                self.name = name
+        else:
+            self.name = name
+            
         self.logger = logger.opt(colors=True)
 
     def trace(self, msg: Union[str, Any], *args, **kwargs) -> None:
