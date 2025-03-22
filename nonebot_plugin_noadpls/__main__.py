@@ -1,27 +1,17 @@
-from .utils.constants import CacheConstants
-from .utils.log import log
-from .utils.cache import save_cache, load_cache, cache_exists
-from .ocr import *
-from nonebot.adapters.onebot.v11 import GROUP as V11GROUP, MessageEvent as V11MessageEvent
+from nonebot.adapters.onebot.v11.bot import Bot
+from nonebot.adapters.onebot.v11.event import GroupMessageEvent, PrivateMessageEvent
+from nonebot.adapters.onebot.v11.permission import GROUP_ADMIN, GROUP_OWNER
 from nonebot.exception import MatcherException
 from nonebot.typing import T_State
 from nonebot import on_message
-from typing import Any
 import httpx
-
-
-# from nonebot.adapters.onebot.v12 import GROUP as V12GROUP, MessageEvent as V12MessageEvent
-# from typing import Union
-
-
-# GROUP = V11GROUP | V12GROUP
-GROUP = V11GROUP
-# MessageEvent = Union[V11MessageEvent, V12MessageEvent]
-MessageEvent = V11MessageEvent
+from .utils.constants import CacheConstants
+from .utils.log import log
+from .utils.cache import save_cache, load_cache, cache_exists
+from .ocr import online_ocr, local_ocr
 
 
 matcher = on_message(
-    permission=GROUP,
     priority=10,
     block=False
 )
@@ -29,7 +19,7 @@ matcher = on_message(
 
 @matcher.handle()
 async def handle_message(
-    event: MessageEvent,
+    event: GroupMessageEvent,
     state: T_State
 ):
     if event.post_type == "message":
@@ -37,6 +27,8 @@ async def handle_message(
         ocr_result = ""
         raw_text = ""
         full_text = ""
+        ocr_bool = False
+        text_bool = False
         # log.debug(f"{getmsg}")
         for segment in getmsg:
             if segment.type == "image":
@@ -74,7 +66,8 @@ async def handle_message(
                         async with httpx.AsyncClient() as client:
                             response = await client.get(image_url)
                             if response.status_code != 200:
-                                log.error(f"获取图像失败，状态码: {response.status_code}")
+                                log.error(
+                                    f"获取图像失败，状态码: {response.status_code}")
                                 await matcher.finish()
                                 return
                             image_data = response.content
@@ -83,11 +76,13 @@ async def handle_message(
                     try:
                         # 尝试使用在线OCR（更可靠）
                         try:
-                            ocr_text = local_ocr(image_data, ocr_result_cache_key)
+                            ocr_text = local_ocr(
+                                image_data, ocr_result_cache_key)
                         except Exception as e:
                             log.warning(f"本地OCR失败: {e}，尝试在线OCR")
                             # 如果在线OCR失败，尝试本地OCR
-                            ocr_text = online_ocr(image_data, ocr_result_cache_key)
+                            ocr_text = online_ocr(
+                                image_data, ocr_result_cache_key)
                     except Exception as e:
                         log.error(f"OCR识别失败: {e}")
                         await matcher.finish()
@@ -95,20 +90,38 @@ async def handle_message(
                     ocr_result = ocr_text
                 if ocr_result:
                     full_text += ocr_result
+                    ocr_bool = True
                     log.debug(f"OCR识别结果: {ocr_result}")
 
             elif segment.type == "text":
                 raw_text = segment.data.get("text", "").strip()
                 if raw_text:
                     full_text += raw_text
+                    text_bool = True
                     log.debug(f"原始文本消息: {raw_text}")
 
             else:
                 log.debug(f"未知消息类型: {segment}{segment.type}")
-                pass
-        # raw_text = getmsg.extract_plain_text().strip()
-        await matcher.finish(full_text)
+        state["full_text"] = full_text
+        if ocr_bool and text_bool:
+            state["ocr_or_text"] = "both"
+        elif ocr_bool:
+            state["ocr_or_text"] = "ocr"
+        elif text_bool:
+            state["ocr_or_text"] = "text"
+        else:
+            log.error("不存在文本或图像识别结果")
+        return
+    return
 
 
-                    # except MatcherException:
-                    #     raise
+@matcher.handle()
+async def judge_and_ban(
+    event: GroupMessageEvent,
+    state: T_State,
+    bot: Bot
+):
+    user_id = event.user_id
+    group_id = event.group_id
+    full_text = state["full_text"]
+    
