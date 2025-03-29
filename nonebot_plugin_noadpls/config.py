@@ -10,11 +10,17 @@ class LocalConfigModel(BaseModel):
     # some_setting: str = "默认值"
     # enable_feature: bool = True
     ban_time: List[int] = [60, 300, 1800, 3600, 86400]
+    ban_text: List[str] = []
+    # ban_text_path: List[str] = []
 
 
 class EnvConfigModel(BaseModel):
     """env读取 不可变动配置项"""
     enable: bool = True
+    priority: int = 10
+    # block: bool = False
+
+    ban_pre_text: List[str] = ["advertisement"]
 
 class PrefixModel(BaseModel):
     """前缀配置"""
