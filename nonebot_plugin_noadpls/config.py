@@ -22,7 +22,7 @@ class PrefixModel(BaseModel):
 
 
 class ConfigModel(BaseModel):
-    env: PrefixModel
+    env: EnvConfigModel
     local: LocalConfigModel
 
 
@@ -56,7 +56,7 @@ CONFIG_PATH = GetStorePath.CONFIG_FILE
 
 global_config = get_driver().config
 
-env_config = get_plugin_config(PrefixModel)
+env_config = get_plugin_config(PrefixModel).noadpls
 
 local_config = load_config()
 
