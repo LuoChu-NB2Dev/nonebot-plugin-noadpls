@@ -54,6 +54,8 @@ class CacheConstants:
     "QQ原始消息缓存前缀"
     QQ_RAW_PICTURE = "qq_raw_picture_"
     "QQ原始图片缓存前缀"
+    GROUP_MEMBER_LIST = "group_member_list_"
+    "群成员列表缓存前缀"
     
     # OCR相关
     OCR_RESULT_TEXT = "ocr_result_text_"
@@ -62,3 +64,5 @@ class CacheConstants:
     "OCR结果图片缓存前缀"
     OCR_CACHE_TTL = 86400
     "定义缓存有效期（1天）"
+    
+    
