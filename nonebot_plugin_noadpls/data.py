@@ -122,7 +122,7 @@ class DataModel(BaseModel):
             notice_type (NoticeType): 通知类型
 
         Returns:
-            Dict[int]: 需要某类通知的用户ID列表
+            set[int]: 需要某类通知的用户ID列表
         """
         if group_id not in self.notice_manager:
             return set()
