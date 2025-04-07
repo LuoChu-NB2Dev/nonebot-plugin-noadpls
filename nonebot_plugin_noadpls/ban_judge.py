@@ -181,10 +181,10 @@ def fuzzy_match_check(text: str, min_score: int = 85) -> list:
 
     # 对每个分词结果进行模糊匹配
     for word in check_words:
+        normalized_word = unicodedata.normalize('NFKC', word).lower()
         # 使用process.extractOne获取最佳匹配结果
         match_result = process.extractOne(
-            word, all_ban_words, scorer=fuzz.ratio)
-
+            normalized_word, all_ban_words, scorer=fuzz.ratio)
         if match_result and match_result[1] >= min_score:
             ban_word = match_result[0]  # 匹配到的违禁词
             score = match_result[1]     # 匹配分数
