@@ -3,6 +3,7 @@ from nonebot.adapters.onebot.v11.bot import Bot
 from nonebot.adapters.onebot.v11.event import GroupMessageEvent, PrivateMessageEvent
 from nonebot.adapters.onebot.v11.permission import GROUP, PRIVATE
 from nonebot.adapters.onebot.v11.exception import ActionFailed
+from nonebot.adapters.onebot.v11.message import MessageSegment
 from nonebot.exception import MatcherException
 from nonebot.typing import T_State
 from nonebot.rule import command
@@ -45,9 +46,6 @@ receive_notice_off_private = on_message(
     permission=PRIVATE
 )
 
-
-
-
 # # 私聊消息通用匹配
 # any_other_private = on_message(
 #     priority=env_config.priority + 1,
@@ -68,10 +66,11 @@ async def handle_message(
     # bot: Bot
 ):
     """处理群消息，提取文本和图片的文字
-    
+
     Args:
         state["full_text"]: 提取出的所有文本
         state["ocr_or_text"]: "ocr" or "text" or "both"
+        state["raw_message"]: 原始消息
     """
     # dict1 = await bot.get_group_info(group_id=event.group_id)
     # dict2 = await bot.get_group_member_info(group_id=event.group_id,user_id=event.user_id)
@@ -79,16 +78,21 @@ async def handle_message(
     # log.error(f"group_info: {dict1}")
     # log.error(f"group_member_info: {dict2}")
     # log.error(f"group_member_list: {dict3}")
+    # 匹配message事件
     if event.post_type == "message":
         getmsg = event.message
+        # 将原始消息存储到状态中
         state["raw_message"] = getmsg
+        # 初始化变量
         ocr_result = ""
         raw_text = ""
         full_text = ""
         ocr_bool = False
         text_bool = False
         # log.debug(f"{getmsg}")
+
         for segment in getmsg:
+            # 图片处理
             if segment.type == "image":
 
                 # 获取图片标识信息
@@ -110,6 +114,7 @@ async def handle_message(
                     if cached_result:
                         log.info(f"使用缓存的OCR结果: {image_name}")
                         log.debug(f"缓存的OCR结果: {cached_result}")
+                        # 直接使用缓存的结果
                         ocr_result = cached_result
                     else:
                         log.error("缓存存在但无法获取/不该出现")
@@ -132,13 +137,13 @@ async def handle_message(
                             save_cache(image_data_cache_key, image_data)
 
                     try:
-                        # 尝试使用在线OCR（更可靠）
+                        # 尝试使用本地OCR
                         try:
                             ocr_text = local_ocr(
                                 image_data, ocr_result_cache_key)
                         except Exception as e:
                             log.warning(f"本地OCR失败: {e}，尝试在线OCR")
-                            # 如果在线OCR失败，尝试本地OCR
+                            # 如果本地OCR失败，尝试在线OCR
                             ocr_text = online_ocr(
                                 image_data, ocr_result_cache_key)
                     except Exception as e:
@@ -147,12 +152,15 @@ async def handle_message(
                         return
                     ocr_result = ocr_text
                 if ocr_result:
+                    # 如果识别结果不为空，添加到文本中
                     full_text += ocr_result
                     ocr_bool = True
                     log.debug(f"OCR识别结果: {ocr_result}")
 
+            # 文本处理
             elif segment.type == "text":
                 raw_text = segment.data.get("text", "").strip()
+                # 如果文本不为空，添加到文本中
                 if raw_text:
                     full_text += raw_text
                     text_bool = True
@@ -160,6 +168,8 @@ async def handle_message(
 
             else:
                 log.debug(f"未知消息类型: {segment}{segment.type}")
+
+        # 将提取的文本和图片识别结果存储到状态中
         state["full_text"] = full_text
         if ocr_bool and text_bool:
             state["ocr_or_text"] = "both"
@@ -172,6 +182,7 @@ async def handle_message(
         return
     return
 
+
 @group_message_matcher.handle()
 async def judge_and_ban(
     event: GroupMessageEvent,
@@ -183,21 +194,29 @@ async def judge_and_ban(
     Args:
         state["ban_judge"]: 是否禁言
     """
+    # 初始化变量
     user_id = event.user_id
     group_id = event.group_id
     full_text = state["full_text"]
-    check_list = check_text(full_text)
-    state["check_list"] = check_list
     state["ban_judge"] = False
     state["ban_success"] = False
     state["revoke_success"] = False
-    
+    state["unban_reason"] = []
+    # 调用check_text函数检查文本
+    check_list = check_text(full_text)
+    state["check_list"] = check_list
+
+    # 存在违禁词
     if check_list:
+        # ban_judge状态为True
         state["ban_judge"] = True
         log.info(f"检测到违禁词: {check_list}")
+        # 获取用户该群被禁次数
         ban_count = data.get_ban_count(group_id, user_id)
+        # 获取定义的禁言时间列表
         config_ban_list = local_config.ban_time
         ban_time = 0
+        # 赋予禁言时间
         if ban_count < len(config_ban_list):
             ban_time = config_ban_list[ban_count]
             log.debug(f"ban_time:{ban_time}")
@@ -231,10 +250,16 @@ async def judge_and_ban(
                 log.error(f"删除消息失败: {e}")
                 state["revoke_success"] = False
             save_data()
-            
+
             log.info(f"已禁言用户: {user_id}")
         else:
             log.error(f"bot没有权限，无法禁言用户: {user_id}")
+            if not bot_is_admin:
+                state["unban_reason"] += ["bot没有权限 "]
+            if user_is_admin:
+                state["unban_reason"] += ["用户是管理员 "]
+            if str(user_id) in su:
+                state["unban_reason"] += ["用户是超级用户 "]
             return
         return
 
@@ -257,10 +282,26 @@ async def transmit_to_admin(
         admin_list = data.get_notice_list(group_id,  NoticeType.BAN)
         for admin_id in admin_list:
             try:
-                time_a = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(event.time))
-                message = f"群号: {group_id}\n用户: {user_id}\n时间: {time_a}\n原始消息：\n{state['raw_message']}\n识别整合文本: {full_text}\n触发违禁词: {state['check_list']}\n"+\
-                (("\n禁言失败" if not state["ban_success"] else "")+\
-                ("\n撤回失败" if not state["revoke_success"] else ""))
+                time_a = time.strftime(
+                    '%Y-%m-%d %H:%M:%S', time.localtime(event.time))
+                message = (
+                    f"群号:  {group_id}\n"
+                    f"用户:  {user_id}\n"
+                    f"时间:  {time_a}\n"
+                    f"消息类型:  {'文本' if state['ocr_or_text'] =='text' else '图片' if state['ocr_or_text'] == 'ocr' else '文本+图片'}\n"
+                    f"原始消息：\n{state['raw_message']}\n"
+                    f"识别整合文本:  {full_text}\n"
+                    f"触发违禁词:  {state['check_list']}\n"
+                )
+                # 添加失败信息(如果有)
+                if not state["ban_success"] or not state["revoke_success"]:
+                    if not state["ban_success"]:
+                        message += "\n禁言失败"
+                    if not state["revoke_success"]:
+                        message += "\n撤回失败"
+                    if state["unban_reason"]:
+                        message += f"\n失败原因:  {state['unban_reason']}"
+
                 await bot.send_private_msg(
                     user_id=admin_id,
                     message=message)
@@ -268,6 +309,25 @@ async def transmit_to_admin(
             except Exception as e:
                 log.error(f"转发消息失败: {e}")
                 return
+    return
+
+
+@group_message_matcher.handle()
+async def notice_to_member(
+    event: GroupMessageEvent,
+    state: T_State,
+    bot: Bot
+):
+    if state["ban_judge"]:
+        message = "\n你发送的消息中包含管理员不允许发送的违禁词哦~"
+        if state["ban_success"] and state["revoke_success"]:
+            message += "\n你已被禁言并且撤回该消息\n申诉或对线请与接收通知的管理联系~"
+        await bot.send(
+            event=event,
+            at_sender=True,
+            message=message
+        )
+    await group_message_matcher.finish()
     return
 
 
@@ -302,7 +362,8 @@ async def set_notice_off(
     return
 
 
-async def get_group_member_list(bot: Bot, group_id: int, refresh: bool = False) -> list:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:
+# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:
+async def get_group_member_list(bot: Bot, group_id: int, refresh: bool = False) -> list:
     group_id_int = int(group_id)
     member_list_ttl = CacheConstants.GROUP_MEMBER_LIST_TTL
 
@@ -321,11 +382,12 @@ async def get_group_member_list(bot: Bot, group_id: int, refresh: bool = False) 
         if not member_list or member_list is None:
             raise MatcherException("bot不在群中 get_group_member_list为空")
         save_cache(f"{CacheConstants.GROUP_MEMBER_LIST}{group_id_int}",
-                    member_list, ttl=member_list_ttl)
+                   member_list, ttl=member_list_ttl)
         return member_list
     except Exception as e:
         log.error(f"获取群成员列表失败: {e}")
         return []
+
 
 async def whether_is_admin(bot: Bot, group_id: int, user_id: int, refresh: bool = False) -> bool:
     """判断用户是否为群管理员
@@ -334,6 +396,7 @@ async def whether_is_admin(bot: Bot, group_id: int, user_id: int, refresh: bool 
         bot: Bot实例
         group_id: 群号
         user_id: 用户ID
+        refresh: 是否刷新缓存
 
     Returns:
         bool: 是否为管理员
@@ -345,13 +408,14 @@ async def whether_is_admin(bot: Bot, group_id: int, user_id: int, refresh: bool 
                 return True
     return False
 
+
 async def notice_public(bot, event, groupid, status):
     if not groupid.isdigit():
         await receive_notice_on_private.finish("请输入有效的群号")
         return
     group_id_int = int(groupid)
     user_id = event.user_id
-    
+
     is_admin = await whether_is_admin(bot, group_id_int, user_id)
 
     if not is_admin:
