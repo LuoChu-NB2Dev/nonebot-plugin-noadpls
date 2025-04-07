@@ -56,6 +56,7 @@ class CacheConstants:
     "QQ原始图片缓存前缀"
     GROUP_MEMBER_LIST = "group_member_list_"
     "群成员列表缓存前缀"
+    GROUP_MEMBER_LIST_TTL = 3600
     
     # OCR相关
     OCR_RESULT_TEXT = "ocr_result_text_"
