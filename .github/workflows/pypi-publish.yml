@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-n-publish:
-    name: Use PDM to Build and publish Python 🐍 distributions 📦 to PyPI
+    name: Use Poetry to Build and publish Python 🐍 distributions 📦 to PyPI
     runs-on: ubuntu-latest
 
     permissions:
