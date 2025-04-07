@@ -206,9 +206,13 @@ async def judge_and_ban(
             log.debug(f"ban_time:{ban_time}")
         else:
             log.error("获取禁言时间失败(不该出现)")
-
-        bot_is_admin = await whether_is_admin(bot, group_id, event.self_id, refresh= True)
-        if bot_is_admin and str(user_id) not in su:
+        # 判断bot是否为管理员
+        bot_is_admin = await whether_is_admin(bot, group_id, event.self_id)
+        user_is_admin = await whether_is_admin(bot, group_id, user_id)
+        if not bot_is_admin:
+            bot_is_admin = await whether_is_admin(bot, group_id, event.self_id, refresh=True)
+        # bot有权限且用户不是管理员且用户不是超级用户
+        if bot_is_admin and (str(user_id) not in su) and not user_is_admin:
             try:
                 await bot.set_group_ban(
                     group_id=group_id,
