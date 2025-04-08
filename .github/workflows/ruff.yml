@@ -15,6 +15,5 @@ jobs:
 
       - name: Run Ruff Lint
         uses: chartboost/ruff-action@v3
-
-      - run: ruff check --fix
-      - run: ruff format
+        with:
+          args: "format --in-place --check --diff"
