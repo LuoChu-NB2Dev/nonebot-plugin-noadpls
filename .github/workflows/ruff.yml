@@ -16,4 +16,4 @@ jobs:
       - name: Run Ruff Lint
         uses: astral-sh/ruff-action@v3
         with:
-          args: "format --in-place --check --diff"
+          args: "format --check --diff"
