@@ -1,38 +1,40 @@
-name: Publish Python 🐍 distributions 📦 to PyPI
+name: Release
 
 on:
   push:
     tags:
-      - '*.*.*'
-  workflow_dispatch:
+      - v*
 
 jobs:
-  build-n-publish:
-    name: Use Poetry to Build and publish Python 🐍 distributions 📦 to PyPI
+  release:
     runs-on: ubuntu-latest
-
     permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
-
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: true
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
+      - name: Setup Python environment
+        uses: ./.github/actions/setup-python
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install poetry-dynamic-versioning
-        run: pip install poetry-dynamic-versioning
-
-      - name: Build and Publish distribution 📦 to PyPI
+      - name: Get Version
+        id: version
         run: |
-          poetry build
-          poetry publish
+          echo "VERSION=$(poetry version -s)" >> $GITHUB_OUTPUT
+          echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Check Version
+        if: steps.version.outputs.VERSION != steps.version.outputs.TAG_VERSION
+        run: exit 1
+
+      - name: Build
+        run: poetry build
+
+      - name: Publish a Python distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Upload Release Asset
+        run: gh release upload --clobber ${{ steps.version.outputs.TAG_NAME }} dist/*.tar.gz dist/*.whl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
