@@ -8,11 +8,11 @@ from ._version import __version__ as __version__
 
 __plugin_meta__ = PluginMetadata(
     name="nonebot-plugin-noadpls",
-    description="插件模板",
-    usage="这是一个一个一个插件模板",
+    description="群广告检测",
+    usage="检测群聊中广告的插件，撤回并禁言，转发管理员",
     type="application",
     homepage="https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls",
     config=ConfigModel,
-    supported_adapters=inherit_supported_adapters("nonebot_plugin_localstore"),
+    supported_adapters={"~onebot.v11"},
     extra={"License": "MIT", "Author": "gongfuture"},
 )
