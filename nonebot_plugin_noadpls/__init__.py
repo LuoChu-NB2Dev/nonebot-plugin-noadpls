@@ -4,7 +4,6 @@ from nonebot.plugin import PluginMetadata, inherit_supported_adapters
 
 from . import __main__ as __main__
 from .config import ConfigModel
-from ._version import __version__ as __version__
 
 __plugin_meta__ = PluginMetadata(
     name="nonebot-plugin-noadpls",

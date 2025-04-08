@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.0.0"  # 将被动态替换
+version = "0.0.1"  # 将被动态替换
 description = "Template plugin project"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
@@ -13,7 +13,6 @@ homepage = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls"
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 nonebot2 = ">=2.4.1"
-# nonebot-plugin-alconna = ">=0.54.2"
 nonebot-plugin-localstore = ">=0.7.4,<0.8.0"
 paddleocr = ">=2.10.0"
 paddlepaddle = "^3.0.0rc1"
@@ -23,28 +22,27 @@ fuzzywuzzy = "^0.18.0"
 python-levenshtein = "^0.27.1"
 opencc = "^1.1.9"
 pypinyin = "^0.54.0"
+pillow = "<11.2.0"
 
 [tool.poetry.group.dev.dependencies]
 nonebot-adapter-onebot = "^2.4.6"
 nonebot2 = {extras = ["fastapi"], version = "^2.4.1"}
+ruff = "^0.11.4"
+pre-commit = "^4.2.0"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.4.3"
 pytest-asyncio = "^0.25.3"
+pytest-cov = "^6.0.0"
+pytest-xdist = "^3.6.1"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"
-
-[tool.poetry_dynamic_versioning]
-enable = true
-vcs = "git"
-pattern = """(?:__version__ = ["'])([^"']+)(?:["'])"""
-path = "nonebot_plugin_noadpls/_version.py"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry.source]]
 name = "清华"
@@ -68,3 +66,47 @@ adapters = [
 plugins = ["nonebot_plugin_noadpls"]
 plugin_dirs = []
 builtin_plugins = []
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = [
+  "F",     # Pyflakes
+  "W",     # pycodestyle warnings
+  "E",     # pycodestyle errors
+  "I",     # isort
+  "UP",    # pyupgrade
+  "ASYNC", # flake8-async
+  "C4",    # flake8-comprehensions
+  "T10",   # flake8-debugger
+  "T20",   # flake8-print
+  "PYI",   # flake8-pyi
+  "PT",    # flake8-pytest-style
+  "Q",     # flake8-quotes
+  "TID",   # flake8-tidy-imports
+  "RUF",   # Ruff-specific rules
+]
+ignore = [
+  "E402",   # module-import-not-at-top-of-file
+  "UP037",  # quoted-annotation
+  "RUF001", # ambiguous-unicode-character-string
+  "RUF002", # ambiguous-unicode-character-docstring
+  "RUF003", # ambiguous-unicode-character-comment
+]
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.pyright]
+pythonVersion = "3.9"
+pythonPlatform = "All"
+
+typeCheckingMode = "standard"
+reportShadowedImports = false
+disableBytesTypePromotions = true
