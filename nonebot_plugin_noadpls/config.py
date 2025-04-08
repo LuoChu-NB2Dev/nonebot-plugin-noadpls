@@ -1,5 +1,5 @@
 import yaml
-from typing import Optional, List
+from typing import List
 from nonebot import get_plugin_config, get_driver
 from pydantic import BaseModel
 

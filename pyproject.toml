@@ -92,7 +92,9 @@ select = [
 #   "RUF",   # Ruff-specific rules
 ]
 ignore = [
+  "E722", # do-not-use-bare-except
   "E402",   # module-import-not-at-top-of-file
+  "E501",   # line-too-long
   "UP037",  # quoted-annotation
   "RUF001", # ambiguous-unicode-character-string
   "RUF002", # ambiguous-unicode-character-docstring

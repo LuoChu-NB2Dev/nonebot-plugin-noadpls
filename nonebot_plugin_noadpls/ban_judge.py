@@ -38,12 +38,13 @@ if not pre_text_list:
 
 dfa = DLFA(words_resource=[*pre_text_list, *config_ban_text_list])
 
+
 def _load_ban_words_from_resources():
     """从资源文件加载所有违禁词，仅执行一次"""
     global _cached_ban_words
     if _cached_ban_words is not None:
         return _cached_ban_words
-    
+
     # 获取所有违禁词
     all_ban_words = []
 
@@ -54,7 +55,8 @@ def _load_ban_words_from_resources():
             try:
                 with open(resource, 'r', encoding='utf-8') as f:
                     # 尝试按行读取词库文件
-                    words = [line.strip() for line in f.readlines() if line.strip()]
+                    words = [line.strip()
+                             for line in f.readlines() if line.strip()]
                     all_ban_words.extend(words)
                     log.debug(f"从预定义词库 {resource.name} 加载了 {len(words)} 个词")
             except UnicodeDecodeError:
@@ -67,7 +69,8 @@ def _load_ban_words_from_resources():
                         for line in lines:
                             if line:
                                 try:
-                                    word = base64.b64decode(line).decode('utf-8').strip()
+                                    word = base64.b64decode(
+                                        line).decode('utf-8').strip()
                                     if word:
                                         all_ban_words.append(word)
                                 except:
@@ -81,10 +84,11 @@ def _load_ban_words_from_resources():
 
     # 添加自定义违禁词
     all_ban_words.extend(config_ban_text_list)
-    
+
     _cached_ban_words = all_ban_words
     log.info(f"成功预加载 {len(all_ban_words)} 个违禁词")
     return all_ban_words
+
 
 def check_text(text: str) -> list:
     """多层次检查文本是否包含违禁词
@@ -215,7 +219,7 @@ def update_words(
     global dfa, config_ban_text_list, pre_text_list, _cached_ban_words
 
     _cached_ban_words = None
-    
+
     try:
         # 更新自定义违禁词列表
         if new_words:
