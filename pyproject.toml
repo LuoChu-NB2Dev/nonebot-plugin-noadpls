@@ -77,10 +77,10 @@ line-ending = "lf"
 [tool.ruff.lint]
 select = [
   "F",     # Pyflakes
-#   "W",     # pycodestyle warnings
+  "W",     # pycodestyle warnings
   "E",     # pycodestyle errors
-#   "I",     # isort
-#   "UP",    # pyupgrade
+  "I",     # isort
+  "UP",    # pyupgrade
 #   "ASYNC", # flake8-async
 #   "C4",    # flake8-comprehensions
 #   "T10",   # flake8-debugger
