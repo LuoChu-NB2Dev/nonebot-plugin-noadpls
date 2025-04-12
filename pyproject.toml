@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.1.2"
+version = "0.1.3"
 description = "检测群聊中广告的插件，撤回并禁言，转发管理员"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
@@ -26,7 +26,7 @@ jieba = "^0.42.1"
 fuzzywuzzy = "^0.18.0"
 python-levenshtein = "^0.27.1"
 opencc = "^1.1.9"
-pypinyin = "^0.54.0"
+# pypinyin = "^0.54.0"
 pillow = "<11.2.0"
 
 [tool.poetry.group.dev.dependencies]
