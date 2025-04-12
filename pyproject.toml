@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.0.1"   # 将被动态替换
+version = "0.1.0"
 description = "Template plugin project"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
