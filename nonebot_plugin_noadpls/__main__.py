@@ -1,23 +1,25 @@
+import time
+
+import httpx
+from nonebot import on_message
 from nonebot.adapters import Message
 from nonebot.adapters.onebot.v11.bot import Bot
 from nonebot.adapters.onebot.v11.event import GroupMessageEvent, PrivateMessageEvent
-from nonebot.adapters.onebot.v11.permission import GROUP, PRIVATE
 from nonebot.adapters.onebot.v11.exception import ActionFailed
+from nonebot.adapters.onebot.v11.permission import GROUP, PRIVATE
 from nonebot.exception import MatcherException
-from nonebot.typing import T_State
-from nonebot.rule import command
 from nonebot.matcher import Matcher
-from nonebot.params import CommandArg, ArgPlainText
-from nonebot import on_message
-import httpx
+from nonebot.params import ArgPlainText, CommandArg
+from nonebot.rule import command
+from nonebot.typing import T_State
+
+from .ban_judge import check_text
+from .config import env_config, global_config, local_config
+from .data import NoticeType, data, save_data
+from .ocr import local_ocr, online_ocr
+from .utils.cache import cache_exists, load_cache, save_cache
 from .utils.constants import CacheConstants
 from .utils.log import log
-from .utils.cache import save_cache, load_cache, cache_exists
-from .ocr import online_ocr, local_ocr
-from .config import env_config, local_config, global_config
-from .ban_judge import check_text
-from .data import NoticeType, data, save_data
-import time
 
 su = global_config.superusers
 

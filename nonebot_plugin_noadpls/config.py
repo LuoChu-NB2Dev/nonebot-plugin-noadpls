@@ -1,29 +1,33 @@
 import yaml
-from typing import List
-from nonebot import get_plugin_config, get_driver
+from nonebot import get_driver, get_plugin_config
 from pydantic import BaseModel
 
-from .utils import log, GetStorePath
+from .utils import GetStorePath, log
+
 
 class LocalConfigModel(BaseModel):
     """localstore插件 可变动配置项"""
+
     # some_setting: str = "默认值"
     # enable_feature: bool = True
-    ban_time: List[int] = [60, 300, 1800, 3600, 86400]
-    ban_text: List[str] = []
+    ban_time: list[int] = [60, 300, 1800, 3600, 86400]
+    ban_text: list[str] = []
     # ban_text_path: List[str] = []
 
 
 class EnvConfigModel(BaseModel):
     """env读取 不可变动配置项"""
+
     enable: bool = True
     priority: int = 10
     # block: bool = False
 
-    ban_pre_text: List[str] = ["advertisement"]
+    ban_pre_text: list[str] = ["advertisement"]
+
 
 class PrefixModel(BaseModel):
     """前缀配置"""
+
     noadpls: EnvConfigModel
 
 
@@ -39,12 +43,12 @@ def load_config() -> LocalConfigModel:
 
     # 加载本地配置文件
     if CONFIG_PATH.exists():
-        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        with open(CONFIG_PATH, encoding="utf-8") as f:
             try:
                 local_config_dict = yaml.safe_load(f) or {}
                 local_config_dict = {**default_local.model_dump(), **local_config_dict}
             except Exception as e:
-                log.error(f"读取配置文件失败: {e}")                     
+                log.error(f"读取配置文件失败: {e}")
         log.debug("本地配置文件加载成功")
     else:
         # 配置文件不存在，创建默认配置
@@ -68,12 +72,9 @@ local_config = load_config()
 
 
 # 导出配置实例
-config = ConfigModel(
-    env=env_config,
-    local=local_config
-)
+config = ConfigModel(env=env_config, local=local_config)
 
-print(config.model_dump())
+# print(config.model_dump())
 
 
 def save_config() -> None:
@@ -88,5 +89,6 @@ def save_config() -> None:
 
     with open(CONFIG_PATH, "w", encoding="utf-8") as f:
         yaml.dump(config_dict, f, allow_unicode=True)
+
 
 save_config()

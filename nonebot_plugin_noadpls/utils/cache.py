@@ -1,11 +1,10 @@
-import os
-import json
-import time
-import shutil
 import hashlib
+import json
+import os
+import shutil
+import time
 from pathlib import Path
-from datetime import datetime, timedelta
-from typing import Optional, Union, Dict, Any, List, Tuple
+from typing import Any, Optional, Union
 
 from .constants import GetStorePath
 from .log import log
@@ -57,7 +56,7 @@ class CacheManager:
     def save(
         self,
         file_name: str,
-        content: Union[str, bytes, Dict, List, Any],
+        content: Union[str, bytes, dict, list, Any],
         ttl: Optional[int] = None,
     ) -> Path:
         """
@@ -137,7 +136,7 @@ class CacheManager:
             # 判断是否为二进制缓存
             if meta_path.exists():
                 # 读取元数据
-                with open(meta_path, "r", encoding="utf-8") as f:
+                with open(meta_path, encoding="utf-8") as f:
                     meta_data = json.load(f)
 
                 # 检查缓存是否过期
@@ -154,7 +153,7 @@ class CacheManager:
                     return f.read()
             else:
                 # 读取JSON格式缓存
-                with open(cache_path, "r", encoding="utf-8") as f:
+                with open(cache_path, encoding="utf-8") as f:
                     cache_data = json.load(f)
 
                 # 检查缓存是否过期
@@ -196,12 +195,12 @@ class CacheManager:
             # 判断是否为二进制缓存
             if meta_path.exists():
                 # 读取元数据
-                with open(meta_path, "r", encoding="utf-8") as f:
+                with open(meta_path, encoding="utf-8") as f:
                     meta_data = json.load(f)
                 return time.time() <= meta_data.get("expires_at", 0)
             else:
                 # 读取JSON格式缓存
-                with open(cache_path, "r", encoding="utf-8") as f:
+                with open(cache_path, encoding="utf-8") as f:
                     cache_data = json.load(f)
                 return time.time() <= cache_data.get("expires_at", 0)
 
@@ -251,7 +250,7 @@ class CacheManager:
                     # 判断是否为二进制缓存
                     if meta_path.exists():
                         # 读取元数据
-                        with open(meta_path, "r", encoding="utf-8") as f:
+                        with open(meta_path, encoding="utf-8") as f:
                             meta_data = json.load(f)
                         if time.time() > meta_data.get("expires_at", 0):
                             os.remove(file_path)
@@ -259,7 +258,7 @@ class CacheManager:
                             count += 1
                     else:
                         # 读取JSON格式缓存
-                        with open(file_path, "r", encoding="utf-8") as f:
+                        with open(file_path, encoding="utf-8") as f:
                             cache_data = json.load(f)
                         if time.time() > cache_data.get("expires_at", 0):
                             os.remove(file_path)
@@ -301,7 +300,7 @@ class CacheManager:
             log.error(f"清除所有缓存失败: {e}")
             return False
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """
         获取缓存统计信息
 
@@ -326,14 +325,14 @@ class CacheManager:
                 # 检查文件是否过期
                 try:
                     if meta_path.exists():
-                        with open(meta_path, "r", encoding="utf-8") as f:
+                        with open(meta_path, encoding="utf-8") as f:
                             meta_data = json.load(f)
                         if time.time() <= meta_data.get("expires_at", 0):
                             valid_files += 1
                         else:
                             expired_files += 1
                     else:
-                        with open(file_path, "r", encoding="utf-8") as f:
+                        with open(file_path, encoding="utf-8") as f:
                             cache_data = json.load(f)
                         if time.time() <= cache_data.get("expires_at", 0):
                             valid_files += 1

@@ -1,14 +1,15 @@
 # Original by https://github.com/canxin121/nonebot_paddle_ocr/blob/main/nonebot_paddle_ocr/api_ocr.py
 
-import hashlib
-from typing import Optional
-import requests
 import base64
 import datetime
+import hashlib
+from typing import Optional
 
-from ..utils.cache import save_cache
-from ..utils.constants import CacheConstants
-from ..utils.log import log
+import requests
+
+from nonebot_plugin_noadpls.utils.cache import save_cache
+from nonebot_plugin_noadpls.utils.constants import CacheConstants
+from nonebot_plugin_noadpls.utils.log import log
 
 
 def timestamp_to_utc(timestamp):
@@ -78,6 +79,7 @@ def online_ocr(image_data: bytes, cache_key: Optional[str] = None) -> str:
         return text
     except Exception as e:
         log.error(f"在线处理OCR结果时出错: {e}")
+        return ""
 
 
 if __name__ == "__main__":
@@ -87,4 +89,4 @@ if __name__ == "__main__":
     ) as pic:
         # 读取图片内容
         pic_data = pic.read()
-        print(api_paddle_ocr(pic_data))
+        print(api_paddle_ocr(pic_data))  # noqa:T201

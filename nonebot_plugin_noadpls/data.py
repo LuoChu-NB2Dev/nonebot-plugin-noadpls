@@ -1,9 +1,10 @@
-import yaml
-from enum import Enum
-from typing import Dict, Optional
-from pydantic import BaseModel, Field
 import os
+from enum import Enum
 from pathlib import Path
+from typing import Optional
+
+import yaml
+from pydantic import BaseModel, Field
 
 from .utils.constants import GetStorePath
 from .utils.log import log
@@ -13,16 +14,20 @@ DATA_PATH = Path(GetStorePath.DATA_FILE)
 
 class NoticeType(str, Enum):
     """通知类型枚举"""
+
     BAN = "ban_notice"
     "禁言通知"
+
 
 # 为NoticeType枚举定义YAML表示方法
 def enum_representer(dumper, adata):
     """自定义枚举类型的YAML表示"""
-    return dumper.represent_scalar('tag:yaml.org,2002:str', adata.value)
+    return dumper.represent_scalar("tag:yaml.org,2002:str", adata.value)
+
 
 # 注册表示方法
 yaml.SafeDumper.add_representer(NoticeType, enum_representer)
+
 
 class DataModel(BaseModel):
     """
@@ -30,9 +35,9 @@ class DataModel(BaseModel):
     禁言: 群ID -> 用户ID -> 禁言次数
     通知管理: 群ID -> 用户ID -> 通知内容 -> 开关Bool
     """
-    ban_count: Dict[int, Dict[int, int]] = Field(default_factory=dict)
-    notice_manager: Dict[int, Dict[int, Dict[str, bool]]
-                         ] = Field(default_factory=dict)
+
+    ban_count: dict[int, dict[int, int]] = Field(default_factory=dict)
+    notice_manager: dict[int, dict[int, dict[str, bool]]] = Field(default_factory=dict)
 
     def get_ban_count(self, group_id: int, user_id: int) -> int:
         """获取用户在指定群的禁言次数"""
@@ -49,7 +54,9 @@ class DataModel(BaseModel):
         self.ban_count[group_id][user_id] += count
         return self.ban_count[group_id][user_id]
 
-    def reset_ban_count(self, group_id: Optional[int] = None, user_id: Optional[int] = None) -> None:
+    def reset_ban_count(
+        self, group_id: Optional[int] = None, user_id: Optional[int] = None
+    ) -> None:
         """重置禁言次数
 
         Args:
@@ -68,7 +75,9 @@ class DataModel(BaseModel):
         else:
             self.ban_count[group_id][user_id] = 0
 
-    def get_notice_state(self, group_id: int, user_id: int, notice_type: NoticeType) -> bool:
+    def get_notice_state(
+        self, group_id: int, user_id: int, notice_type: NoticeType
+    ) -> bool:
         """获取用户在指定群对某类通知的开启状态
 
         Args:
@@ -79,9 +88,15 @@ class DataModel(BaseModel):
         Returns:
             通知是否开启，默认为False
         """
-        return self.notice_manager.get(group_id, {}).get(user_id, {}).get(notice_type, False)
+        return (
+            self.notice_manager.get(group_id, {})
+            .get(user_id, {})
+            .get(notice_type, False)
+        )
 
-    def set_notice_state(self, group_id: int, user_id: int, notice_type: NoticeType, state: bool = True) -> bool:
+    def set_notice_state(
+        self, group_id: int, user_id: int, notice_type: NoticeType, state: bool = True
+    ) -> bool:
         """设置用户在指定群对某类通知的开启状态
 
         Args:
@@ -102,7 +117,7 @@ class DataModel(BaseModel):
         self.notice_manager[group_id][user_id][notice_type] = state
         return state
 
-    def get_user_notices(self, group_id: int, user_id: int) -> Dict[str, bool]:
+    def get_user_notices(self, group_id: int, user_id: int) -> dict[str, bool]:
         """获取用户在指定群的所有通知设置
 
         Args:
@@ -126,10 +141,18 @@ class DataModel(BaseModel):
         """
         if group_id not in self.notice_manager:
             return set()
-        return {user_id for user_id, notices in self.notice_manager[group_id].items() if notices.get(notice_type, False)}
+        return {
+            user_id
+            for user_id, notices in self.notice_manager[group_id].items()
+            if notices.get(notice_type, False)
+        }
 
-    def reset_notice_state(self, group_id: Optional[int] = None, user_id: Optional[int] = None,
-                           notice_type: Optional[NoticeType] = None) -> None:
+    def reset_notice_state(
+        self,
+        group_id: Optional[int] = None,
+        user_id: Optional[int] = None,
+        notice_type: Optional[NoticeType] = None,
+    ) -> None:
         """重置通知设置
 
         Args:
@@ -170,12 +193,12 @@ def load_data() -> DataModel:
         return data
 
     try:
-        with open(DATA_PATH, "r", encoding="utf-8") as f:
+        with open(DATA_PATH, encoding="utf-8") as f:
             loaded_data = yaml.safe_load(f) or {}
 
         # 将加载的数据更新到全局数据实例
         data.ban_count = loaded_data.get("ban_count", {})
-        
+
         # 处理通知管理器数据
         notice_manager = loaded_data.get("notice_manager", {})
         if notice_manager:
@@ -188,12 +211,14 @@ def load_data() -> DataModel:
                         # 将字符串转换为枚举
                         try:
                             notice_type = NoticeType(notice_str)
-                            processed_notice_manager[group_id][user_id][notice_type] = state
+                            processed_notice_manager[group_id][user_id][notice_type] = (
+                                state
+                            )
                         except ValueError:
                             # 处理无法识别的通知类型
                             log.warning(f"无法识别的通知类型: {notice_str}")
             data.notice_manager = processed_notice_manager
-        
+
         log.debug("数据文件加载成功")
         return data
     except Exception as e:
@@ -207,11 +232,8 @@ def save_data() -> None:
 
     try:
         # 创建可序列化的字典
-        serializable_data = {
-            "ban_count": data.ban_count,
-            "notice_manager": {}
-        }
-        
+        serializable_data = {"ban_count": data.ban_count, "notice_manager": {}}
+
         # 处理通知管理器，将枚举转换为字符串
         for group_id, users in data.notice_manager.items():
             serializable_data["notice_manager"][group_id] = {}
@@ -219,12 +241,18 @@ def save_data() -> None:
                 serializable_data["notice_manager"][group_id][user_id] = {}
                 for notice_type, state in notices.items():
                     # 确保枚举值被转换为字符串
-                    notice_key = notice_type.value if isinstance(notice_type, NoticeType) else str(notice_type)
-                    serializable_data["notice_manager"][group_id][user_id][notice_key] = state
-        
+                    notice_key = (
+                        notice_type.value
+                        if isinstance(notice_type, NoticeType)
+                        else str(notice_type)
+                    )
+                    serializable_data["notice_manager"][group_id][user_id][
+                        notice_key
+                    ] = state
+
         with open(DATA_PATH, "w", encoding="utf-8") as f:
             yaml.dump(serializable_data, f, allow_unicode=True)
-        
+
         log.debug("数据文件保存成功")
     except Exception as e:
         log.error(f"保存数据文件失败: {e}")

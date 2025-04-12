@@ -1,6 +1,6 @@
 # ruff: noqa: E402
 
-from nonebot.plugin import PluginMetadata, inherit_supported_adapters
+from nonebot.plugin import PluginMetadata
 
 from . import __main__ as __main__
 from .config import ConfigModel

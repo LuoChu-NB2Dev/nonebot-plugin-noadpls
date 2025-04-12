@@ -1,4 +1,5 @@
 from nonebot import require
+
 require("nonebot_plugin_localstore")
 
 import nonebot_plugin_localstore as store
@@ -7,7 +8,7 @@ import nonebot_plugin_localstore as store
 class GetStorePath:
     """
     LocalStore相关常量
-    
+
     Args:
         CONFIG_FILENAME: 可变配置文件名
         CONFIG_PATH: LocalStore提供插件配置保存路径
@@ -38,15 +39,16 @@ class GetStorePath:
     CACHE_PATH = store.get_plugin_cache_dir()
     "LocalStore提供插件缓存保存路径"
 
+
 class CacheConstants:
     """
     缓存前缀
-    
-    
+
+
     Args:
         QQ_RAW_MESSAGE: QQ原始消息缓存前缀
         QQ_RAW_PICTURE: QQ原始图片缓存前缀
-        
+
     """
 
     # 接收消息相关
@@ -57,7 +59,7 @@ class CacheConstants:
     GROUP_MEMBER_LIST = "group_member_list_"
     "群成员列表缓存前缀"
     GROUP_MEMBER_LIST_TTL = 3600
-    
+
     # OCR相关
     OCR_RESULT_TEXT = "ocr_result_text_"
     "OCR结果文字缓存前缀"
@@ -65,5 +67,3 @@ class CacheConstants:
     "OCR结果图片缓存前缀"
     OCR_CACHE_TTL = 86400
     "定义缓存有效期（1天）"
-    
-    

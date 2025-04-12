@@ -1,12 +1,14 @@
-import io
 import hashlib
-from PIL import Image
-import numpy as np
+import io
 from typing import Optional
+
+import numpy as np
+from PIL import Image
 
 # 条件导入paddleocr，如果本地ocr不可用，不影响整体功能
 try:
     from paddleocr import PaddleOCR
+
     # 创建全局 PaddleOCR 实例，只需初始化一次以节省资源
     paddle_ocr = PaddleOCR(
         use_angle_cls=True,  # 使用方向分类器
@@ -18,9 +20,9 @@ try:
 except ImportError:
     PADDLE_AVAILABLE = False
 
-from ..utils.cache import save_cache
-from ..utils.log import log
-from ..utils.constants import CacheConstants
+from nonebot_plugin_noadpls.utils.cache import save_cache
+from nonebot_plugin_noadpls.utils.constants import CacheConstants
+from nonebot_plugin_noadpls.utils.log import log
 
 
 def recognize_image(image_data: bytes, cache_key: Optional[str] = None) -> str:
@@ -39,7 +41,9 @@ def recognize_image(image_data: bytes, cache_key: Optional[str] = None) -> str:
 
     # 如果没有提供缓存键，使用图像数据的哈希值作为缓存键
     if not cache_key:
-        cache_key = f"{CacheConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
+        cache_key = (
+            f"{CacheConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
+        )
 
     # 将二进制数据转换为 PaddleOCR 可处理的格式
     image = io.BytesIO(image_data)

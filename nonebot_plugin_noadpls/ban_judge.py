@@ -1,13 +1,15 @@
-from typing import Optional, List
-from cleanse_speech import DLFA, SpamShelf
-from .config import config, save_config
-from .utils.log import log
 import pathlib
 import re
 import unicodedata
-from jieba import lcut_for_search
+from typing import Optional
+
+from cleanse_speech import DLFA, SpamShelf
 from fuzzywuzzy import fuzz, process
+from jieba import lcut_for_search
 from opencc import OpenCC
+
+from .config import config, save_config
+from .utils.log import log
 
 pre_text_list = []
 
@@ -21,7 +23,7 @@ SPAM_LIBRARIES = {
     "pornographic": SpamShelf.CN.PORNOGRAPHIC,
     "politics": SpamShelf.CN.POLITICS,
     "general": SpamShelf.CN.GENERAL,
-    "netease": SpamShelf.CN.NETEASE
+    "netease": SpamShelf.CN.NETEASE,
 }
 
 for pre_text in config_pre_text_list:
@@ -36,7 +38,7 @@ if not pre_text_list:
     pre_text_list = [SpamShelf.CN.ADVERTISEMENT]
     log.info("使用默认词库: advertisement")
 
-dfa = DLFA(words_resource=[*pre_text_list, *config_ban_text_list])
+dfa = DLFA(words_resource=[*pre_text_list, config_ban_text_list])
 
 
 def _load_ban_words_from_resources():
@@ -53,24 +55,25 @@ def _load_ban_words_from_resources():
         # 预定义词库是文件路径，需要读取内容
         if isinstance(resource, pathlib.Path) and resource.exists():
             try:
-                with open(resource, 'r', encoding='utf-8') as f:
+                with open(resource, encoding="utf-8") as f:
                     # 尝试按行读取词库文件
-                    words = [line.strip()
-                             for line in f.readlines() if line.strip()]
+                    words = [line.strip() for line in f.readlines() if line.strip()]
                     all_ban_words.extend(words)
                     log.debug(f"从预定义词库 {resource.name} 加载了 {len(words)} 个词")
             except UnicodeDecodeError:
                 # 可能是二进制文件，尝试解析base64编码内容
                 import base64
+
                 try:
-                    with open(resource, 'rb') as f:
+                    with open(resource, "rb") as f:
                         content = f.read()
-                        lines = content.split(b'\n')
+                        lines = content.split(b"\n")
                         for line in lines:
                             if line:
                                 try:
-                                    word = base64.b64decode(
-                                        line).decode('utf-8').strip()
+                                    word = (
+                                        base64.b64decode(line).decode("utf-8").strip()
+                                    )
                                     if word:
                                         all_ban_words.append(word)
                                 except:
@@ -78,9 +81,9 @@ def _load_ban_words_from_resources():
                     log.debug(f"从二进制词库 {resource.name} 加载了词")
                 except Exception as e:
                     log.error(f"无法读取词库文件 {resource}: {e}")
-        elif hasattr(resource, 'words') and isinstance(resource.words, list):
-            # 兼容可能存在的其他格式词库
-            all_ban_words.extend(resource.words)
+        else:
+            log.error(f"预定义词库 {resource} 不存在或不可读")
+            continue
 
     # 添加自定义违禁词
     all_ban_words.extend(config_ban_text_list)
@@ -129,30 +132,38 @@ def preprocess_text(text: str) -> str:
         处理后的文本
     """
     # 步骤1: Unicode规范化 (NFKC模式将兼容字符转为标准形式)
-    result = unicodedata.normalize('NFKC', text)
+    result = unicodedata.normalize("NFKC", text)
 
     # 步骤2: 移除所有非中文、非英文、非数字的字符
     # 保留中文(含日韩)、英文和数字，移除其他所有字符
-    result = re.sub(
-        r'[^\u4e00-\u9fff\u3040-\u30ff\u3130-\u318fa-zA-Z0-9]', '', result)
+    result = re.sub(r"[^\u4e00-\u9fff\u3040-\u30ff\u3130-\u318fa-zA-Z0-9]", "", result)
 
     # 步骤3: 处理常见替代字符
     replace_pairs = {
-        '0': 'o', '○': 'o', '〇': 'o',
-        '1': 'l', '壹': '一',
-        '2': '二', '贰': '二',
-        '5': 's', '五': '5',
-        '6': 'b', '六': '6',
-        '8': 'B', '八': '8',
-        '9': 'g', '九': '9',
-        'c': '口', 'd': '口',
-        '@': 'a'
+        "0": "o",
+        "○": "o",
+        "〇": "o",
+        "1": "l",
+        "壹": "一",
+        "2": "二",
+        "贰": "二",
+        "5": "s",
+        "五": "5",
+        "6": "b",
+        "六": "6",
+        "8": "B",
+        "八": "8",
+        "9": "g",
+        "九": "9",
+        "c": "口",
+        "d": "口",
+        "@": "a",
     }
 
     for old, new in replace_pairs.items():
         result = result.replace(old, new)
 
-    result = OpenCC('t2s').convert(result)  # 繁体转简体
+    result = OpenCC("t2s").convert(result)  # 繁体转简体
 
     log.debug(f"文本预处理: '{text}' -> '{result}'")
     return result
@@ -185,13 +196,14 @@ def fuzzy_match_check(text: str, min_score: int = 85) -> list:
 
     # 对每个分词结果进行模糊匹配
     for word in check_words:
-        normalized_word = unicodedata.normalize('NFKC', word).lower()
+        normalized_word = unicodedata.normalize("NFKC", word).lower()
         # 使用process.extractOne获取最佳匹配结果
         match_result = process.extractOne(
-            normalized_word, all_ban_words, scorer=fuzz.ratio)
+            normalized_word, all_ban_words, scorer=fuzz.ratio
+        )
         if match_result and match_result[1] >= min_score:
             ban_word = match_result[0]  # 匹配到的违禁词
-            score = match_result[1]     # 匹配分数
+            score = match_result[1]  # 匹配分数
 
             log.debug(f"模糊匹配: '{word}' -> '{ban_word}' (分数: {score})")
             if ban_word not in matches:
@@ -201,10 +213,11 @@ def fuzzy_match_check(text: str, min_score: int = 85) -> list:
 
 
 def update_words(
-        new_words: Optional[List[str]] = None,
-        add_words: Optional[List[str]] = None,
-        remove_words: Optional[List[str]] = None,
-        reload_library: bool = False) -> bool:
+    new_words: Optional[list[str]] = None,
+    add_words: Optional[list[str]] = None,
+    remove_words: Optional[list[str]] = None,
+    reload_library: bool = False,
+) -> bool:
     """更新违禁词列表
 
     Args:
@@ -270,10 +283,12 @@ def update_words(
                 log.info("使用默认词库: advertisement")
 
         # 重建DFA检测器
-        dfa = DLFA(words_resource=[
-            *pre_text_list,  # 预定义词库
-            config_ban_text_list  # 自定义违禁词
-        ])
+        dfa = DLFA(
+            words_resource=[
+                *pre_text_list,  # 预定义词库
+                config_ban_text_list,  # 自定义违禁词
+            ]
+        )
 
         # 保存配置到文件
         save_config()
