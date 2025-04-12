@@ -28,7 +28,7 @@ class EnvConfigModel(BaseModel):
 class PrefixModel(BaseModel):
     """前缀配置"""
 
-    noadpls: EnvConfigModel
+    noadpls: EnvConfigModel = EnvConfigModel()
 
 
 class ConfigModel(BaseModel):
