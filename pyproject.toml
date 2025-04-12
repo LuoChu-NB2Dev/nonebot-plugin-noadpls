@@ -1,14 +1,18 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.1.0"
-description = "Template plugin project"
+version = "0.1.1"
+description = "检测群聊中广告的插件，撤回并禁言，转发管理员"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
 license = "MIT"
 packages = [{include = "nonebot_plugin_noadpls"}]
-
-[tool.poetry.urls]
 homepage = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls"
+repository = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls"
+keywords = ["bot", "qq", "qqbot", "onebotv11", "onebot", "nonebot2", "nonebot"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
