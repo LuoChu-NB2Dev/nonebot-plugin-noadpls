@@ -16,6 +16,9 @@ jobs:
 
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
+        env:
+          POETRY_SOURCE_DEFAULT_URL: "https://pypi.org/simple"
+          POETRY_SOURCE_DEFAULT_SECONDARY: "false"
 
       - name: Get Version
         id: version

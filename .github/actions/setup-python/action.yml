@@ -18,6 +18,14 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
         cache: "poetry"
+    
+    - name: Configure Poetry to use official PyPI
+      run: |
+        poetry source remove 清华 || true
+        poetry source remove 阿里云 || true  
+        poetry source remove 豆瓣 || true
+        poetry source add --priority=default pypi https://pypi.org/simple/
+      shell: bash
 
     - run: poetry install
       shell: bash
