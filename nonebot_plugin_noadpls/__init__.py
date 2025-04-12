@@ -6,9 +6,9 @@ from . import __main__ as __main__
 from .config import ConfigModel
 
 __plugin_meta__ = PluginMetadata(
-    name="nonebot-plugin-noadpls",
-    description="群广告检测",
-    usage="检测群聊中广告的插件，撤回并禁言，转发管理员",
+    name="群聊广告哒咩",
+    description="检测群聊中广告的插件，撤回并禁言，转发管理员",
+    usage="",
     type="application",
     homepage="https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls",
     config=ConfigModel,
