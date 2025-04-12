@@ -12,7 +12,7 @@
 
 # nonebot-plugin-noadpls
 
-_ 群聊发广告 哒咩~ _
+_✨ 群聊发广告 哒咩~ ✨_
 
 <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
 <a href="https://poetry.eustace.io">
@@ -55,7 +55,7 @@ _ 群聊发广告 哒咩~ _
 </div>
 
 
-##  介绍
+## 📖 介绍
 
 这是一个用于屏蔽群聊中广告的插件，诞生于一个朋友的需求。
 
@@ -80,7 +80,7 @@ TODO:
 - [ ] 用户自定义屏蔽词文件路径读取
 - [ ] 管理员/群主私聊调整插件配置
 
-##  安装
+## 💿 安装
 
 以下提到的方法 任选**其一** 即可
 
@@ -143,7 +143,7 @@ plugins = [
 
 </details>
 
-##  配置
+## ⚙️ 配置
 
 在 nonebot2 项目的 `.env` 文件中的可选配置
 
@@ -171,12 +171,12 @@ plugins = [
 |   ban_text    | List[str] |             [ ]              |          用户自定义屏蔽词          |
 | ban_text_path | List[str] |             [ ]              | 用户自定义屏蔽词文件路径(还没写好) |
 
-> [!WARNING]
+> ![WARNING]
 > 不推荐用户自行更改可变配置文件
 > ~~推荐使用私聊指令进行更新~~ 指令更新还没写好()
 
 
-##  使用
+## 🎉 使用
 
 ### 指令表
 
@@ -196,7 +196,7 @@ plugins = [
 ![管理员群聊触发处理](./resources/管理员群聊触发处理.png "管理员群聊触发处理")
 ![管理员触发私聊通知-抹除qq号](./resources/管理员触发私聊通知-抹除qq号.png "管理员触发私聊通知-抹除qq号")
 
-##  联系
+## 📞 联系
 
 QQ：3214528055  
 Discord：[@洛初](https://discordapp.com/users/959299637049700355)  
@@ -204,7 +204,7 @@ Telegram：[@Furinature](https://t.me/Furinature)
 吹水群：[611124274](https://qm.qq.com/q/BS2k2XIfxS)  
 邮箱：<gongfuture@outlook.com>
 
-##  鸣谢
+## 💡 鸣谢
 
 感谢帮忙测试的各位群友~
 
@@ -217,12 +217,12 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 以及，使用这个插件的你~
 
-##  赞助
+## 💰 赞助
 
 **[赞助我](https://afdian.com/a/luochu)**
 
 感谢大家的赞助！你们的赞助将是我继续创作的动力！
 
-##  更新日志
+## 📝 更新日志
 
 芝士刚刚发布的插件，还没有更新日志的说 qwq~
