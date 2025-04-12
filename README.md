@@ -54,7 +54,6 @@ _✨ 群聊发广告 哒咩~ ✨_
 
 </div>
 
-
 ## 📖 介绍
 
 这是一个用于屏蔽群聊中广告的插件，诞生于一个朋友的需求。
@@ -67,6 +66,7 @@ _✨ 群聊发广告 哒咩~ ✨_
 > 主要针对 QQ 群聊环境进行开发和测试，其他平台不保证可用。
 
 TODO:
+
 - [x] 对图片进行 OCR 识别
 - [x] 对文本进行模糊匹配
 - [x] 排除字符对识别影响，如"代.理"
@@ -161,7 +161,7 @@ plugins = [
   - `general`: 默认中文通用词库
   - `netease`: 网易屏蔽词库
 
-插件同时使用 [nonebot-plugin-localstore](https://github.com/nonebot/plugin-localstore/) 插件存储 `可变配置`,`插件数据`和`缓存文件`，具体配置方法请参见 [nonebot-plugin-localstore 存储路径](https://github.com/nonebot/plugin-localstore/blob/master/README.md#%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84) 和 [nonebot-plugin-localstore 配置项](https://github.com/nonebot/plugin-localstore/blob/master/README.md#%E9%85%8D%E7%BD%AE%E9%A1%B9) 
+插件同时使用 [nonebot-plugin-localstore](https://github.com/nonebot/plugin-localstore/) 插件存储 `可变配置`,`插件数据`和`缓存文件`，具体配置方法请参见 [nonebot-plugin-localstore 存储路径](https://github.com/nonebot/plugin-localstore/blob/master/README.md#%E5%AD%98%E5%82%A8%E8%B7%AF%E5%BE%84) 和 [nonebot-plugin-localstore 配置项](https://github.com/nonebot/plugin-localstore/blob/master/README.md#%E9%85%8D%E7%BD%AE%E9%A1%B9)
 
 将会存储在 `localstore` 定义的配置存储文件中的配置项
 
@@ -171,10 +171,9 @@ plugins = [
 |   ban_text    | List[str] |             [ ]              |          用户自定义屏蔽词          |
 | ban_text_path | List[str] |             [ ]              | 用户自定义屏蔽词文件路径(还没写好) |
 
-> ![WARNING]
+> [!WARNING]
 > 不推荐用户自行更改可变配置文件
 > ~~推荐使用私聊指令进行更新~~ 指令更新还没写好()
-
 
 ## 🎉 使用
 
@@ -209,6 +208,7 @@ Telegram：[@Furinature](https://t.me/Furinature)
 感谢帮忙测试的各位群友~
 
 感谢以下项目：
+
 - [nonebot-plugin-localstore](https://github.com/nonebot/plugin-localstore) 提供了本地文件存储支持
 - [TelechaBot/cleanse-speech](https://github.com/TelechaBot/cleanse-speech) 使用了基础屏蔽机制和预定义词库
 - [nonebot_paddle_ocr](https://github.com/canxin121/nonebot_paddle_ocr) 参考了图片处理部分逻辑并且使用了其在线OCR
