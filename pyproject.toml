@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.1.1"
+version = "0.1.2"
 description = "检测群聊中广告的插件，撤回并禁言，转发管理员"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
@@ -17,6 +17,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 nonebot2 = ">=2.4.1"
+nonebot-adapter-onebot = ">=2.4.6"
 nonebot-plugin-localstore = ">=0.7.4,<0.8.0"
 paddleocr = ">=2.10.0"
 paddlepaddle = "^3.0.0rc1"
@@ -29,7 +30,6 @@ pypinyin = "^0.54.0"
 pillow = "<11.2.0"
 
 [tool.poetry.group.dev.dependencies]
-nonebot-adapter-onebot = "^2.4.6"
 nonebot2 = {extras = ["fastapi"], version = "^2.4.1"}
 ruff = "^0.11.4"
 pre-commit = "^4.2.0"
