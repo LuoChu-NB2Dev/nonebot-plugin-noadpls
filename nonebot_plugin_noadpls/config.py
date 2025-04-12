@@ -15,13 +15,6 @@ class LocalConfigModel(BaseModel):
     # ban_text_path: List[str] = []
 
 
-
-
-
-
-
-
-
 class EnvConfigModel(BaseModel):
     """env读取 不可变动配置项"""
 
