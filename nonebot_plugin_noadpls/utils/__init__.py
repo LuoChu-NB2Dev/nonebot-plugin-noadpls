@@ -1,10 +1,10 @@
-from .constants import CacheConstants, GetStorePath
+from .constants import PrefixConstants, StoragePathConstants
 from .log import Log, log
 
 # 导出所有公共接口
 __all__ = [
-    "CacheConstants",
-    "GetStorePath",
     "Log",
+    "PrefixConstants",
+    "StoragePathConstants",
     "log",
 ]

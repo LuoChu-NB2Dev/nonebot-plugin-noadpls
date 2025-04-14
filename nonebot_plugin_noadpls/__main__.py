@@ -18,7 +18,7 @@ from .config import env_config, global_config, local_config
 from .data import NoticeType, data, save_data
 from .ocr import local_ocr, online_ocr
 from .utils.cache import cache_exists, load_cache, save_cache
-from .utils.constants import CacheConstants
+from .utils.constants import PrefixConstants
 from .utils.log import log
 
 su = global_config.superusers
@@ -102,9 +102,9 @@ async def handle_message(
                     return
 
                 # 图片数据的缓存键
-                image_data_cache_key = f"{CacheConstants.QQ_RAW_PICTURE}{image_name}"
+                image_data_cache_key = f"{PrefixConstants.QQ_RAW_PICTURE}{image_name}"
                 # OCR结果的缓存键
-                ocr_result_cache_key = f"{CacheConstants.OCR_RESULT_TEXT}{image_name}"
+                ocr_result_cache_key = f"{PrefixConstants.OCR_RESULT_TEXT}{image_name}"
 
                 # 先检查缓存中是否有结果
                 if cache_exists(ocr_result_cache_key):
@@ -340,15 +340,15 @@ async def set_notice_off(
 # -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:# -> Any | list[dict[str, Any]] | dict[Any, Any] | None:
 async def get_group_member_list(bot: Bot, group_id: int, refresh: bool = False) -> list:
     group_id_int = int(group_id)
-    member_list_ttl = CacheConstants.GROUP_MEMBER_LIST_TTL
+    member_list_ttl = PrefixConstants.GROUP_MEMBER_LIST_TTL
 
     if (
-        cache_exists(f"{CacheConstants.GROUP_MEMBER_LIST}{group_id_int}")
+        cache_exists(f"{PrefixConstants.GROUP_MEMBER_LIST}{group_id_int}")
         and not refresh
     ):
         try:
             member_list = load_cache(
-                f"{CacheConstants.GROUP_MEMBER_LIST}{group_id_int}"
+                f"{PrefixConstants.GROUP_MEMBER_LIST}{group_id_int}"
             )
             if not member_list or member_list is None:
                 raise ValueError("缓存数据为空")
@@ -361,7 +361,7 @@ async def get_group_member_list(bot: Bot, group_id: int, refresh: bool = False) 
         if not member_list or member_list is None:
             raise MatcherException("bot不在群中 get_group_member_list为空")
         save_cache(
-            f"{CacheConstants.GROUP_MEMBER_LIST}{group_id_int}",
+            f"{PrefixConstants.GROUP_MEMBER_LIST}{group_id_int}",
             member_list,
             ttl=member_list_ttl,
         )

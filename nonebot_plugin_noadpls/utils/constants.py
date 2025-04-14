@@ -5,7 +5,7 @@ require("nonebot_plugin_localstore")
 import nonebot_plugin_localstore as store
 
 
-class GetStorePath:
+class StoragePathConstants:
     """
     LocalStore相关常量
 
@@ -40,7 +40,7 @@ class GetStorePath:
     "LocalStore提供插件缓存保存路径"
 
 
-class CacheConstants:
+class PrefixConstants:
     """
     缓存前缀
 

@@ -6,11 +6,11 @@ import time
 from pathlib import Path
 from typing import Any, Optional, Union
 
-from .constants import GetStorePath
+from .constants import StoragePathConstants
 from .log import log
 
 # 缓存文件的根目录
-CACHE_ROOT = GetStorePath.CACHE_PATH
+CACHE_ROOT = StoragePathConstants.CACHE_PATH
 
 
 class CacheManager:

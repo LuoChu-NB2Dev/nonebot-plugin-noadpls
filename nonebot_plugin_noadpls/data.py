@@ -6,10 +6,10 @@ from typing import Optional
 import yaml
 from pydantic import BaseModel, Field
 
-from .utils.constants import GetStorePath
+from .utils.constants import StoragePathConstants
 from .utils.log import log
 
-DATA_PATH = Path(GetStorePath.DATA_FILE)
+DATA_PATH = Path(StoragePathConstants.DATA_FILE)
 
 
 class NoticeType(str, Enum):

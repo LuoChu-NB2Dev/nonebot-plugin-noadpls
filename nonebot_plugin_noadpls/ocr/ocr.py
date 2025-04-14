@@ -21,7 +21,7 @@ except ImportError:
     PADDLE_AVAILABLE = False
 
 from nonebot_plugin_noadpls.utils.cache import save_cache
-from nonebot_plugin_noadpls.utils.constants import CacheConstants
+from nonebot_plugin_noadpls.utils.constants import PrefixConstants
 from nonebot_plugin_noadpls.utils.log import log
 
 
@@ -42,7 +42,7 @@ def recognize_image(image_data: bytes, cache_key: Optional[str] = None) -> str:
     # 如果没有提供缓存键，使用图像数据的哈希值作为缓存键
     if not cache_key:
         cache_key = (
-            f"{CacheConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
+            f"{PrefixConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
         )
 
     # 将二进制数据转换为 PaddleOCR 可处理的格式
@@ -80,7 +80,7 @@ def recognize_image(image_data: bytes, cache_key: Optional[str] = None) -> str:
         log.error(f"本地处理OCR结果时出错: {e}")
 
     # 缓存结果
-    save_cache(cache_key, text, CacheConstants.OCR_CACHE_TTL)
+    save_cache(cache_key, text, PrefixConstants.OCR_CACHE_TTL)
     log.info(f"OCR结果已缓存: {cache_key}")
 
     return text

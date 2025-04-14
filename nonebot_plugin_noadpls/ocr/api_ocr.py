@@ -8,7 +8,7 @@ from typing import Optional
 import requests
 
 from nonebot_plugin_noadpls.utils.cache import save_cache
-from nonebot_plugin_noadpls.utils.constants import CacheConstants
+from nonebot_plugin_noadpls.utils.constants import PrefixConstants
 from nonebot_plugin_noadpls.utils.log import log
 
 
@@ -68,12 +68,12 @@ def online_ocr(image_data: bytes, cache_key: Optional[str] = None) -> str:
     # 如果没有提供缓存键，使用图像数据的哈希值作为缓存键
     if not cache_key:
         cache_key = (
-            f"{CacheConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
+            f"{PrefixConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
         )
     try:
         text = api_paddle_ocr(image_data)
 
-        save_cache(cache_key, text, CacheConstants.OCR_CACHE_TTL)
+        save_cache(cache_key, text, PrefixConstants.OCR_CACHE_TTL)
         log.info(f"OCR结果已缓存: {cache_key}")
 
         return text

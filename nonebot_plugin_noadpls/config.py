@@ -2,7 +2,7 @@ import yaml
 from nonebot import get_driver, get_plugin_config
 from pydantic import BaseModel
 
-from .utils import GetStorePath, log
+from .utils import StoragePathConstants, log
 
 
 class LocalConfigModel(BaseModel):
@@ -71,7 +71,7 @@ def load_config() -> LocalConfigModel:
 
 
 # 配置文件路径
-CONFIG_PATH = GetStorePath.CONFIG_FILE
+CONFIG_PATH = StoragePathConstants.CONFIG_FILE
 
 global_config = get_driver().config
 
