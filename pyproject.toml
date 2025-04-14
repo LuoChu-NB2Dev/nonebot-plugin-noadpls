@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-noadpls"
-version = "0.1.4"
+version = "0.1.5"
 description = "检测群聊中广告的插件，撤回并禁言，转发管理员"
 authors = ["gongfuture <gongfuture@outlook.com>"]
 readme = "README.md"
