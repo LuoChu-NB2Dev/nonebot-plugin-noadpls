@@ -1,6 +1,7 @@
 import pathlib
 import re
 import unicodedata
+from re import Pattern
 from typing import Optional
 
 from cleanse_speech import DLFA, SpamShelf
@@ -14,9 +15,13 @@ from .utils.log import log
 pre_text_list = []
 
 _cached_ban_words = None
+_compiled_regex = {}  # 存储编译后的正则表达式
 
 config_pre_text_list = config.env.ban_pre_text
 config_ban_text_list = config.local.ban_text
+
+# 定义正则表达式的前缀标识
+REGEX_PREFIX = "re:"
 
 SPAM_LIBRARIES = {
     "advertisement": SpamShelf.CN.ADVERTISEMENT,
@@ -26,19 +31,54 @@ SPAM_LIBRARIES = {
     "netease": SpamShelf.CN.NETEASE,
 }
 
-for pre_text in config_pre_text_list:
-    pre_text = pre_text.lower()  # 转小写，便于匹配
-    if pre_text in SPAM_LIBRARIES:
-        pre_text_list.append(SPAM_LIBRARIES[pre_text])
-        log.info(f"已加载词库: {pre_text}")
-    else:
-        log.warning(f"未知词库: {pre_text}")
-
-if not pre_text_list:
+if not config_pre_text_list:
     pre_text_list = [SpamShelf.CN.ADVERTISEMENT]
     log.info("使用默认词库: advertisement")
 
-dfa = DLFA(words_resource=[*pre_text_list, config_ban_text_list])
+else:
+    for pre_text in config_pre_text_list:
+        pre_text = pre_text.lower()  # 转小写，便于匹配
+        if pre_text == "none":
+            pre_text_list = []
+            log.info("不使用预定义词库")
+            break
+        if pre_text in SPAM_LIBRARIES:
+            pre_text_list.append(SPAM_LIBRARIES[pre_text])
+            log.info(f"已加载词库: {pre_text}")
+        else:
+            log.warning(f"未知词库: {pre_text}")
+
+
+# 分离普通文本和正则表达式
+normal_words = [w for w in config_ban_text_list if not w.startswith(REGEX_PREFIX)]
+regex_patterns = [
+    w[len(REGEX_PREFIX) :] for w in config_ban_text_list if w.startswith(REGEX_PREFIX)
+]
+
+
+dfa = DLFA(words_resource=[*pre_text_list, normal_words])
+
+
+def _compile_regex_patterns(patterns: list[str]) -> dict[str, Pattern]:
+    """编译正则表达式模式
+
+    Args:
+        patterns: 正则表达式字符串列表
+
+    Returns:
+        编译后的正则表达式字典 {模式字符串: 编译后的模式}
+    """
+    compiled = {}
+    for pattern in patterns:
+        try:
+            compiled[pattern] = re.compile(pattern, re.IGNORECASE)
+            log.debug(f"成功编译正则表达式: {pattern}")
+        except Exception as e:
+            log.error(f"正则表达式编译失败: {pattern}, 错误: {e}")
+    return compiled
+
+
+_compiled_regex = _compile_regex_patterns(regex_patterns)
 
 
 def _load_ban_words_from_resources():
@@ -85,8 +125,8 @@ def _load_ban_words_from_resources():
             log.error(f"预定义词库 {resource} 不存在或不可读")
             continue
 
-    # 添加自定义违禁词
-    all_ban_words.extend(config_ban_text_list)
+    # 添加自定义违禁词（仅普通文本，不包含正则表达式）
+    all_ban_words.extend(normal_words)
 
     _cached_ban_words = all_ban_words
     log.info(f"成功预加载 {len(all_ban_words)} 个违禁词")
@@ -119,7 +159,36 @@ def check_text(text: str) -> list:
     if fuzzy_matches:
         return fuzzy_matches
 
+    # 第四层：正则表达式检测
+    regex_matches = regex_match_check(text)
+    if regex_matches:
+        return regex_matches
+
     return []
+
+
+def regex_match_check(text: str) -> list:
+    """使用正则表达式检查文本
+
+    Args:
+        text: 要检查的文本
+
+    Returns:
+        匹配到的正则表达式列表
+    """
+    matches = []
+    # log.debug(f"检查文本: {text}")
+
+    # 对每个正则表达式进行匹配
+    for pattern, compiled_pattern in _compiled_regex.items():
+        log.debug(f"检查正则表达式: {pattern}")
+        if compiled_pattern.search(text):
+            matches.append(f"{REGEX_PREFIX}{pattern}: {compiled_pattern.findall(text)}")
+            log.debug(
+                f"正则表达式匹配成功: {pattern}: {compiled_pattern.findall(text)}"
+            )
+
+    return matches
 
 
 def preprocess_text(text: str) -> str:
@@ -229,7 +298,14 @@ def update_words(
     Returns:
         是否成功更新
     """
-    global dfa, config_ban_text_list, pre_text_list, _cached_ban_words
+    global \
+        dfa, \
+        config_ban_text_list, \
+        pre_text_list, \
+        _cached_ban_words, \
+        _compiled_regex, \
+        normal_words, \
+        regex_patterns
 
     _cached_ban_words = None
 
@@ -282,11 +358,24 @@ def update_words(
                 pre_text_list = [SpamShelf.CN.ADVERTISEMENT]
                 log.info("使用默认词库: advertisement")
 
-        # 重建DFA检测器
+        # 分离并更新普通文本和正则表达式
+        normal_words = [
+            w for w in config_ban_text_list if not w.startswith(REGEX_PREFIX)
+        ]
+        regex_patterns = [
+            w[len(REGEX_PREFIX) :]
+            for w in config_ban_text_list
+            if w.startswith(REGEX_PREFIX)
+        ]
+
+        # 重新编译正则表达式
+        _compiled_regex = _compile_regex_patterns(regex_patterns)
+
+        # 重建DFA检测器 (仅使用普通文本)
         dfa = DLFA(
             words_resource=[
                 *pre_text_list,  # 预定义词库
-                config_ban_text_list,  # 自定义违禁词
+                normal_words,  # 自定义普通违禁词
             ]
         )
 
