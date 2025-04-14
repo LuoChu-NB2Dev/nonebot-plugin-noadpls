@@ -37,7 +37,7 @@ class ConfigModel(BaseModel):
 
 
 def load_config() -> LocalConfigModel:
-    """加载配置，分别加载环境变量配置和本地文件配置"""
+    """加载本地文件配置"""
     local_config_dict = {}
     default_local = LocalConfigModel()
 
@@ -45,11 +45,20 @@ def load_config() -> LocalConfigModel:
     if CONFIG_PATH.exists():
         with open(CONFIG_PATH, encoding="utf-8") as f:
             try:
-                local_config_dict = yaml.safe_load(f) or {}
+                loaded_data = yaml.safe_load(f) or {}
+                # 仅加载 LocalConfigModel 中定义的字段
+                local_config_dict = {
+                    k: loaded_data[k]
+                    for k in default_local.model_dump().keys()
+                    if k in loaded_data
+                }
+                # 对于缺失的字段，使用默认值填充
                 local_config_dict = {**default_local.model_dump(), **local_config_dict}
+                log.debug("本地配置文件加载成功")
             except Exception as e:
-                log.error(f"读取配置文件失败: {e}")
-        log.debug("本地配置文件加载成功")
+                log.error(f"读取配置文件失败: {e}, 将使用默认本地配置")
+                local_config_dict = default_local.model_dump()
+        # print(local_config_dict) # 用于调试，可以注释掉
     else:
         # 配置文件不存在，创建默认配置
         CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -68,27 +77,26 @@ global_config = get_driver().config
 
 env_config = get_plugin_config(PrefixModel).noadpls
 
+# 从 yml 文件加载 local 配置
 local_config = load_config()
 
 
-# 导出配置实例
+# 导出合并后的配置实例
 config = ConfigModel(env=env_config, local=local_config)
 
-# print(config.model_dump())
+# print(config.model_dump()) # 用于调试，可以注释掉
 
 
 def save_config() -> None:
-    """仅保存本地可修改的配置到本地文件"""
+    """仅保存本地可修改的配置 (local 部分) 到本地文件"""
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-    # # 创建一个只包含LocalConfigModel字段的字典
-    # local_fields = set(LocalConfigModel().model_dump().keys())
-    config_dict = config.model_dump()
-    # local_config_dict = {k: v for k,
-    #                      v in config_dict.items() if k in local_fields}
+    # 获取 local 配置部分的字典
+    local_config_to_save = config.local.model_dump()
 
     with open(CONFIG_PATH, "w", encoding="utf-8") as f:
-        yaml.dump(config_dict, f, allow_unicode=True)
+        yaml.dump(local_config_to_save, f, allow_unicode=True)
+    log.debug("本地配置已保存到文件")
 
 
-save_config()
+# save_config() # 可以在需要时调用以保存当前 local 配置
