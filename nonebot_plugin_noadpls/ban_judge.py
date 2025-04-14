@@ -10,6 +10,7 @@ from jieba import lcut_for_search
 from opencc import OpenCC
 
 from .config import config, save_config
+from .utils.constants import PrefixConstants
 from .utils.log import log
 
 pre_text_list = []
@@ -21,7 +22,7 @@ config_pre_text_list = config.env.ban_pre_text
 config_ban_text_list = config.local.ban_text
 
 # 定义正则表达式的前缀标识
-REGEX_PREFIX = "re:"
+REGEX_PREFIX = PrefixConstants.BAN_PRE_TEXT_REGEX
 
 SPAM_LIBRARIES = {
     "advertisement": SpamShelf.CN.ADVERTISEMENT,

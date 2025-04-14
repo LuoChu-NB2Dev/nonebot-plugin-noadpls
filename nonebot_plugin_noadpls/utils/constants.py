@@ -67,3 +67,5 @@ class PrefixConstants:
     "OCR结果图片缓存前缀"
     OCR_CACHE_TTL = 86400
     "定义缓存有效期（1天）"
+
+    BAN_PRE_TEXT_REGEX = "re:"
