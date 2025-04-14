@@ -151,7 +151,7 @@ plugins = [
 | :--------------------: | :-------: | :-------------: | :--------------------: |
 |    noadpls__enable     |   Bool    |      True       |      是否启用插件      |
 |   noadpls__priority    |    Int    |       10        |       插件优先级       |
-| *noadpls__ban_pre_text | List[str] | "advertisement" | 启用的预定义屏蔽词词库 |
+| *noadpls__ban_pre_text | List[str] | ["advertisement"] | 启用的预定义屏蔽词词库 |
 
 - *详细内容请参见 [TelechaBot/cleanse-speech](https://github.com/TelechaBot/cleanse-speech/blob/main/src/cleanse_speech/bookshelf.py)
   TL;DR 太长不看版
