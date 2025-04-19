@@ -1,7 +1,6 @@
 import inspect
 from typing import Any, Optional, Union
 
-from loguru import logger as loguru_logger
 from nonebot import get_driver
 from nonebot.log import logger
 
@@ -55,9 +54,9 @@ class Log:
         # 检查配置的日志级别是否为 TRACE 或 DEBUG
         # Loguru 级别: TRACE=5, DEBUG=10, INFO=20 ...
         try:
-            level_no = loguru_logger.level(self.configured_log_level_name).no
+            level_no = logger.level(self.configured_log_level_name).no
             # 仅当全局配置级别 <= DEBUG 时显示函数名
-            return level_no <= loguru_logger.level("DEBUG").no
+            return level_no <= logger.level("DEBUG").no
         except ValueError:
             # 处理无效的日志级别名称
             return False  # 默认为不显示
