@@ -5,7 +5,7 @@ import datetime
 import hashlib
 from typing import Optional
 
-import requests
+import httpx  # 导入 httpx
 
 from nonebot_plugin_noadpls.utils.cache import save_cache
 from nonebot_plugin_noadpls.utils.constants import PrefixConstants
@@ -34,7 +34,7 @@ def api_paddle_ocr(img) -> str:
         "Accept": "*/*",
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/605.1.15",
         "Referer": "https://www.paddlepaddle.org.cn/hub/scene/ocr",
-        "Content-Length": "176200",
+        # "Content-Length": "176200", # httpx 会自动处理 Content-Length
         "Accept-Language": "zh-CN,zh-Hans;q=0.9",
     }
     # 定义两个时间戳
@@ -53,8 +53,11 @@ def api_paddle_ocr(img) -> str:
     # 定义请求的数据，使用base64编码的图片
     data = {"image": pic_base64.decode()}
 
-    # 发送post请求，并获取响应
-    response = requests.post(url, headers=headers, json=data)
+    # 使用 httpx 发送同步 post 请求
+    with httpx.Client() as client:
+        response = client.post(url, headers=headers, json=data)
+        response.raise_for_status()  # 检查请求是否成功
+
     results = response.json()["result"][0]["data"]
     text = " "
     for result in results:
@@ -77,16 +80,24 @@ def online_ocr(image_data: bytes, cache_key: Optional[str] = None) -> str:
         log.info(f"OCR结果已缓存: {cache_key}")
 
         return text
+    except httpx.HTTPStatusError as e:  # 捕获 httpx 的错误
+        log.error(f"在线OCR请求失败: {e.response.status_code} - {e.response.text}")
+        return ""
     except Exception as e:
         log.error(f"在线处理OCR结果时出错: {e}")
         return ""
 
 
 if __name__ == "__main__":
-    with open(
-        r"D:\OneDrive - Luo Chu Network Company\图片\Snipaste_2022-02-21_09-01-29.png",
-        "rb",
-    ) as pic:
-        # 读取图片内容
-        pic_data = pic.read()
-        print(api_paddle_ocr(pic_data))  # noqa:T201
+    try:
+        with open(
+            r"D:\OneDrive - Luo Chu Network Company\图片\Snipaste_2022-02-21_09-01-29.png",
+            "rb",
+        ) as pic:
+            # 读取图片内容
+            pic_data = pic.read()
+            print(api_paddle_ocr(pic_data))  # noqa:T201
+    except FileNotFoundError:
+        print("测试图片文件未找到，请确保路径正确。")  # noqa:T201
+    except Exception as e:
+        print(f"测试时发生错误: {e}")  # noqa:T201

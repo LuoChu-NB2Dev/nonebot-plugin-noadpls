@@ -27,6 +27,7 @@ fuzzywuzzy = "^0.18.0"
 python-levenshtein = "^0.27.1"
 opencc = "^1.1.9"
 # pypinyin = "^0.54.0"
+httpx = "^0.28.1"
 
 [tool.poetry.group.dev.dependencies]
 nonebot2 = {extras = ["fastapi"], version = "^2.4.1"}
