@@ -3,7 +3,7 @@
 from nonebot.plugin import PluginMetadata
 
 from . import __main__ as __main__
-from .config import ConfigModel
+from .config import PrefixModel
 
 __plugin_meta__ = PluginMetadata(
     name="群聊广告哒咩",
@@ -11,7 +11,7 @@ __plugin_meta__ = PluginMetadata(
     usage="",
     type="application",
     homepage="https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls",
-    config=ConfigModel,
+    config=PrefixModel,
     supported_adapters={"~onebot.v11"},
     extra={"License": "MIT", "Author": "gongfuture"},
 )
