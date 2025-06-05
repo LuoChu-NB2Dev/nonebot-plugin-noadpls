@@ -1,8 +1,9 @@
 import time
+from typing import Union
 
 import httpx
 from nonebot import on_message
-from nonebot.adapters import Message
+from nonebot.adapters import Event, Message
 from nonebot.adapters.onebot.v11.bot import Bot
 from nonebot.adapters.onebot.v11.event import GroupMessageEvent, PrivateMessageEvent
 from nonebot.adapters.onebot.v11.exception import ActionFailed
@@ -10,7 +11,7 @@ from nonebot.adapters.onebot.v11.permission import GROUP, PRIVATE
 from nonebot.exception import MatcherException
 from nonebot.matcher import Matcher
 from nonebot.params import ArgPlainText, CommandArg
-from nonebot.rule import command
+from nonebot.rule import Rule, command
 from nonebot.typing import T_State
 
 from .ban_judge import check_text
@@ -23,9 +24,27 @@ from .utils.log import log
 
 su = global_config.superusers
 
-# 群聊消息通用匹配
+
+def group_detection_enabled() -> Rule:
+    """
+    自定义规则：检查群组是否启用了检测功能
+    只有启用检测的群组消息才会被处理
+    """
+
+    async def _group_detection_enabled(event: Event) -> bool:
+        if isinstance(event, GroupMessageEvent):
+            return data.get_group_enable_state(event.group_id)
+        return True  # 非群组消息默认通过
+
+    return Rule(_group_detection_enabled)
+
+
+# 群聊消息通用匹配 - 使用自定义规则检查群组检测状态
 group_message_matcher = on_message(
-    priority=env_config.priority, block=False, permission=GROUP
+    rule=group_detection_enabled(),
+    priority=env_config.priority,
+    block=False,
+    permission=GROUP,
 )
 
 
@@ -43,6 +62,20 @@ receive_notice_off_private = on_message(
     priority=env_config.priority,
     block=True,
     permission=PRIVATE,
+)
+
+group_detect_turn_on = on_message(
+    rule=command("nap_on"),
+    priority=env_config.priority,
+    block=True,
+    permission=GROUP | PRIVATE,
+)
+
+group_detect_turn_off = on_message(
+    rule=command("nap_off"),
+    priority=env_config.priority,
+    block=True,
+    permission=GROUP | PRIVATE,
 )
 
 # # 私聊消息通用匹配
@@ -195,6 +228,7 @@ async def judge_and_ban(event: GroupMessageEvent, state: T_State, bot: Bot):
     state["ban_success"] = False
     state["revoke_success"] = False
     state["unban_reason"] = []
+
     # 调用check_text函数检查文本
     check_list = check_text(full_text)
     state["check_list"] = check_list
@@ -410,17 +444,103 @@ async def notice_public(bot, event, groupid, status):
     if status:
         data.set_notice_state(group_id_int, user_id, NoticeType.BAN, True)
         save_data()
-        await receive_notice_on_private.finish(
+        await receive_notice_on_private.send(
             f"已开启接收群号为：\n {group_id_int} \n的禁言通知"
         )
         log.info(f"用户 {user_id} 已开启接收 {group_id_int} 的禁言通知")
+        await receive_notice_on_private.finish()
     else:
         data.set_notice_state(group_id_int, user_id, NoticeType.BAN, False)
         save_data()
-        await receive_notice_on_private.finish(
+        await receive_notice_on_private.send(
             f"已关闭接收群号为：\n {group_id_int} \n的禁言通知"
         )
         log.info(f"用户 {user_id} 已关闭接收 {group_id_int} 的禁言通知")
+        await receive_notice_on_private.finish()
+    return
+
+
+@group_detect_turn_on.handle()
+@group_detect_turn_off.handle()
+async def get_group_detect_group_id(
+    bot: Bot,
+    event: Union[PrivateMessageEvent, GroupMessageEvent],
+    matcher: Matcher,
+    arg: Message = CommandArg(),
+):
+    # 如果是群消息且没有提供参数，直接使用当前群
+    if isinstance(event, GroupMessageEvent) and not arg.extract_plain_text():
+        status = matcher == group_detect_turn_on
+        await group_detect_public(bot, event, str(event.group_id), status)
+        return
+
+    # 如果提供了参数，设置参数
+    if arg.extract_plain_text():
+        matcher.set_arg("groupid", arg)
+    return
+
+
+@group_detect_turn_on.got("groupid", prompt="请输入群号")
+async def set_group_detect_on(
+    bot: Bot,
+    event: Union[PrivateMessageEvent, GroupMessageEvent],
+    groupid: str = ArgPlainText("groupid"),
+):
+    await group_detect_public(bot, event, groupid, True)
+    return
+
+
+@group_detect_turn_off.got("groupid", prompt="请输入群号")
+async def set_group_detect_off(
+    bot: Bot,
+    event: Union[PrivateMessageEvent, GroupMessageEvent],
+    groupid: str = ArgPlainText("groupid"),
+):
+    await group_detect_public(bot, event, groupid, False)
+    return
+
+
+async def group_detect_public(bot, event, groupid, status):
+    """群检测开关公共处理函数"""
+    # 如果是群消息且没有提供群号，使用当前群号
+    if isinstance(event, GroupMessageEvent) and not groupid:
+        group_id_int = event.group_id
+        user_id = event.user_id
+    else:
+        # 私聊消息或提供了群号
+        if not groupid.isdigit():
+            finish_matcher = group_detect_turn_on if status else group_detect_turn_off
+            await finish_matcher.finish("请输入有效的群号")
+            return
+        group_id_int = int(groupid)
+        user_id = event.user_id
+
+    # 验证用户是否为该群管理员
+    is_admin = await whether_is_admin(bot, group_id_int, user_id)
+
+    if not is_admin:
+        finish_matcher = group_detect_turn_on if status else group_detect_turn_off
+        await finish_matcher.finish("您不是这个群的管理员哦~")
+        return
+
+    log.debug(f"用户 {user_id} 是群 {group_id_int} 的管理员")
+
+    # 设置群检测状态
+    if status:
+        data.set_group_enable_state(group_id_int, True)
+        save_data()
+        success_msg = f"已开启群号为：\n {group_id_int} \n的群检测功能"
+        log.info(f"用户 {user_id} 已开启 {group_id_int} 的群检测功能")
+        finish_matcher = group_detect_turn_on
+    else:
+        data.set_group_enable_state(group_id_int, False)
+        save_data()
+        success_msg = f"已关闭群号为：\n {group_id_int} \n的群检测功能"
+        log.info(f"用户 {user_id} 已关闭 {group_id_int} 的群检测功能")
+        finish_matcher = group_detect_turn_off
+
+    await finish_matcher.send(success_msg)
+    await finish_matcher.finish()
     return
 
 

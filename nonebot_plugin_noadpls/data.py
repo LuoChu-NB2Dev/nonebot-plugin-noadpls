@@ -34,10 +34,12 @@ class DataModel(BaseModel):
     数据模型
     禁言: 群ID -> 用户ID -> 禁言次数
     通知管理: 群ID -> 用户ID -> 通知内容 -> 开关Bool
+    群检测开关: 群ID -> 是否开启检测
     """
 
     ban_count: dict[int, dict[int, int]] = Field(default_factory=dict)
     notice_manager: dict[int, dict[int, dict[str, bool]]] = Field(default_factory=dict)
+    group_enable: dict[int, bool] = Field(default_factory=dict)
 
     def get_ban_count(self, group_id: int, user_id: int) -> int:
         """获取用户在指定群的禁言次数"""
@@ -180,6 +182,50 @@ class DataModel(BaseModel):
             if notice_type in self.notice_manager[group_id][user_id]:
                 del self.notice_manager[group_id][user_id][notice_type]
 
+    def get_group_enable_state(self, group_id: int) -> bool:
+        """获取指定群的检测开关状态
+
+        Args:
+            group_id: 群ID
+
+        Returns:
+            群检测是否开启，默认为False
+        """
+        return self.group_enable.get(group_id, False)
+
+    def set_group_enable_state(self, group_id: int, state: bool = True) -> bool:
+        """设置指定群的检测开关状态
+
+        Args:
+            group_id: 群ID
+            state: 开启状态，默认为True
+
+        Returns:
+            设置后的状态
+        """
+        self.group_enable[group_id] = state
+        return state
+
+    def get_enabled_groups(self) -> set[int]:
+        """获取所有开启检测的群ID列表
+
+        Returns:
+            开启检测的群ID集合
+        """
+        return {group_id for group_id, enabled in self.group_enable.items() if enabled}
+
+    def reset_group_enable_state(self, group_id: Optional[int] = None) -> None:
+        """重置群检测开关状态
+
+        Args:
+            group_id: 指定群ID，为None则重置所有群的开关状态
+        """
+        if group_id is None:
+            self.group_enable = {}
+        else:
+            if group_id in self.group_enable:
+                del self.group_enable[group_id]
+
 
 # 全局数据实例
 data = DataModel()
@@ -198,6 +244,7 @@ def load_data() -> DataModel:
 
         # 将加载的数据更新到全局数据实例
         data.ban_count = loaded_data.get("ban_count", {})
+        data.group_enable = loaded_data.get("group_enable", {})
 
         # 处理通知管理器数据
         notice_manager = loaded_data.get("notice_manager", {})
@@ -232,7 +279,11 @@ def save_data() -> None:
 
     try:
         # 创建可序列化的字典
-        serializable_data = {"ban_count": data.ban_count, "notice_manager": {}}
+        serializable_data = {
+            "ban_count": data.ban_count,
+            "notice_manager": {},
+            "group_enable": data.group_enable,
+        }
 
         # 处理通知管理器，将枚举转换为字符串
         for group_id, users in data.notice_manager.items():
