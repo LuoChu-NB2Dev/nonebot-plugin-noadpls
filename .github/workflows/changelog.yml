@@ -25,10 +25,62 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           args: '-l 2 -d=true -p=true -i=^v0\.1\.[1-8]$ -c'
           header: |
-            # Changelog
+            ## 📝 更新日志
 
             本文档记录了项目的所有重要变更。
 
             格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
             并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
           commit_summary_template: '⬆️ auto update changelog for %s changes'
+
+      - name: Sync changelog to README
+        run: |
+          # 检查 CHANGELOG.md 是否存在
+          if [ -f "CHANGELOG.md" ]; then
+            echo "📝 开始同步 CHANGELOG.md 到 README.md"
+            
+            # 创建临时文件存储新的 README 内容
+            TEMP_FILE=$(mktemp)
+            
+            # 读取 README.md 并替换 CHANGELOG 部分
+            awk '
+              BEGIN { in_changelog = 0 }
+              /<!-- CHANGELOG_START -->/ { 
+                print $0
+                print ""
+                # 直接输出整个 CHANGELOG.md 文件内容
+                while ((getline line < "CHANGELOG.md") > 0) {
+                  print line
+                }
+                close("CHANGELOG.md")
+                in_changelog = 1
+                next
+              }
+              /<!-- CHANGELOG_END -->/ { 
+                print $0
+                in_changelog = 0
+                next
+              }
+              !in_changelog { print $0 }
+            ' README.md > "$TEMP_FILE"
+            
+            # 替换原文件
+            mv "$TEMP_FILE" README.md
+            
+            echo "✅ 已将 CHANGELOG.md 内容同步到 README.md"
+          else
+            echo "⚠️ CHANGELOG.md 文件不存在，跳过同步"
+          fi
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          if git diff --quiet; then
+            echo "📝 没有变更需要提交"
+          else
+            git add .
+            git commit -m "📝 自动更新 CHANGELOG 和 README"
+            git push
+            echo "✅ 已提交并推送更改"
+          fi

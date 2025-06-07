@@ -230,6 +230,6 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 感谢大家的赞助！你们的赞助将是我继续创作的动力！
 
+<!-- CHANGELOG_START -->
 ## 📝 更新日志
-
-请查看 [CHANGELOG.md](CHANGELOG.md)
+<!-- CHANGELOG_END -->
