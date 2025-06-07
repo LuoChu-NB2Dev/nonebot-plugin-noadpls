@@ -11,9 +11,11 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
         env:
@@ -31,6 +33,33 @@ jobs:
         if: steps.version.outputs.VERSION != steps.version.outputs.TAG_VERSION
         run: exit 1
 
+      - name: Check if draft release exists
+        id: check_draft
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="${{ steps.version.outputs.TAG_NAME }}"
+          DRAFT_EXISTS=$(gh release list --json tagName,isDraft --jq ".[] | select(.tagName == \"$TAG_NAME\" and .isDraft == true) | .tagName")
+          if [ -z "$DRAFT_EXISTS" ]; then
+            echo "错误: 标签 $TAG_NAME 对应的草稿发布不存在，请先在 GitHub 上创建草稿发布"
+            exit 1
+          fi
+          echo "找到草稿发布: $TAG_NAME"
+
+      - name: Update changelog
+        uses: rhysd/changelog-from-release/action@v3
+        with:
+          file: CHANGELOG.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          args: -l 2 -d=true # 包含草稿发布
+          header: |
+            # Changelog
+
+            本文档记录了项目的所有重要变更。
+
+            格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
+            并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+    
       - name: Build
         run: poetry build
 

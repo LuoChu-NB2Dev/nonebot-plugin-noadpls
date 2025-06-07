@@ -1,8 +1,13 @@
-name: Update Changelog
+# 此工作流已整合到 release.yml 中，不再使用
+# 保留作为参考
 
+name: Update Changelog (Deprecated)
+
+# 已禁用此工作流，功能已整合到 release.yml
 on:
-  release:
-    types: [published] # 当创建草稿发布时触发
+  workflow_dispatch: # 仅手动触发
+  # release:
+  #   types: [published]
 
 jobs:
   changelog:
