@@ -23,7 +23,7 @@ jobs:
         with:
           file: CHANGELOG.md
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          args: -l 2 -d=true -p=true -i="^v0\.1\.[1-8]"
+          args: '-l 2 -d=true -p=true -i=^v0\.1\.[1-8]$ -c'
           header: |
             # Changelog
 
@@ -31,3 +31,4 @@ jobs:
 
             格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
             并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+          commit_summary_template: '⬆️ auto update changelog for %s changes'
