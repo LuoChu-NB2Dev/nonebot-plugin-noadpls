@@ -25,7 +25,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           args: '-l 2 -d=true -p=true -i=^v0\.1\.[1-8]$ -c'
           header: |
-            ## 📝 更新日志
+            # 📝 更新日志
 
           footer: |
           
@@ -34,6 +34,10 @@ jobs:
           commit: false  # 禁用自动提交
           push: false    # 禁用自动推送
 
+      - name: Update README changelog
+        run: python scripts/update_readme_changelog.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit changes
         run: |
