@@ -31,7 +31,8 @@ jobs:
 
             格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
             并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
-          commit_summary_template: '⬆️ auto update changelog for %s changes'
+          commit: false  # 禁用自动提交
+          push: false    # 禁用自动推送
 
       - name: Sync changelog to README
         run: |
@@ -66,7 +67,6 @@ jobs:
             
             # 替换原文件
             mv "$TEMP_FILE" README.md
-            
             echo "✅ 已将 CHANGELOG.md 内容同步到 README.md"
           else
             echo "⚠️ CHANGELOG.md 文件不存在，跳过同步"
@@ -80,7 +80,7 @@ jobs:
             echo "📝 没有变更需要提交"
           else
             git add .
-            git commit -m "📝 自动更新 CHANGELOG 和 README"
+            git commit -m "⬆️ auto update changelog and sync readme" -m "Changelog update was created by changelog-from-release in '${GITHUB_WORKFLOW}' CI workflow"
             git push
             echo "✅ 已提交并推送更改"
           fi
