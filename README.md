@@ -232,4 +232,4 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 ## 📝 更新日志
 
-芝士刚刚发布的插件，还没有更新日志的说 qwq~
+请查看 [CHANGELOG.md](CHANGELOG.md)
