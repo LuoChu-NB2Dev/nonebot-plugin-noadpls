@@ -2,7 +2,7 @@ name: Update Changelog
 
 on:
   release:
-    types: [created] # 当创建草稿发布时触发
+    types: [published] # 当创建草稿发布时触发
 
 jobs:
   changelog:
