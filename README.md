@@ -234,12 +234,20 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 本项目采用 [MIT License](./LICENSE) 许可证，详情请参阅 LICENSE 文件。
 
-<!-- markdownlint-disable -->
-<!-- CHANGELOG_START -->
-
 ## 📝 更新日志
 
-[CHANGELOG.md](./CHANGELOG.md)
+<!-- markdownlint-disable -->
+<!-- RELEASE_CHANGELOG_START -->
 
-<!-- CHANGELOG_END -->
+<!-- RELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->
+
+<!-- markdownlint-disable -->
+<!-- PRERELEASE_CHANGELOG_START -->
+
+<!-- PRERELEASE_CHANGELOG_END -->
+<!-- markdownlint-enable -->
+
+更多Release请见 [Releases](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases)
+
+完整更新日志请见 [CHANGELOG.md](./CHANGELOG.md)
