@@ -24,7 +24,7 @@ jobs:
         with:
           file: CHANGELOG.md
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          args: -l 2 -d=true # 包含草稿发布
+          args: -l 2 -d=true -p=true -i="^v0\.1\.[1-8]"
           header: |
             # Changelog
 
