@@ -437,7 +437,8 @@ async def notice_public(bot, event, groupid, status):
     is_admin = await whether_is_admin(bot, group_id_int, user_id)
 
     if not is_admin:
-        await receive_notice_on_private.finish("您不是这个群的管理员哦~")
+        # await receive_notice_on_private.finish("您不是这个群的管理员哦~")
+        await receive_notice_on_private.finish()
         return
 
     log.debug(f"用户 {user_id} 是群 {group_id_int} 的管理员")
@@ -520,7 +521,8 @@ async def group_detect_public(bot, event, groupid, status):
 
     if not is_admin:
         finish_matcher = group_detect_turn_on if status else group_detect_turn_off
-        await finish_matcher.finish("您不是这个群的管理员哦~")
+        # await finish_matcher.finish("您不是这个群的管理员哦~")
+        await finish_matcher.finish()
         return
 
     log.debug(f"用户 {user_id} 是群 {group_id_int} 的管理员")
