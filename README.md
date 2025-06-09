@@ -269,6 +269,9 @@ Telegram：[@Furinature](https://t.me/Furinature)
 - [Release 0.2.0a1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.0a1) - [v0.2.0a1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.0a1) - 2025-06-07
 > # Release 0.2.0a1
 >
+> > [!WARNING]
+> > 此版本为预发行版，未通过充分测试，仅建议追求最新功能用户尝试
+>
 > ## Feature
 >
 > ### Added
@@ -279,12 +282,10 @@ Telegram：[@Furinature](https://t.me/Furinature)
 > ### Changed
 > - 现在判定用户尝试管理类指令但不具备管理权限时，不再对指令进行答复 5c9978bf4050ebac7109a1990fc04c4154644d46
 >   - 此前版本会在用户不具备权限时回复`您不是这个群的管理员哦~`，如果有用户频繁使用指令可能导致机器人风控
+>   - 后续预计修改成一段时间内仅进行一次不具备权限回复
 >
 > ## CI/CD
 > - 增加自动changelog更新 7cee04957c0dbcc6ea1e89cc65c264fb90c447da
->
-> > [!WARNING]
-> > 此版本为预发行版，未通过充分测试，仅建议追求最新功能用户尝试
 >
 > **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0a1
 
