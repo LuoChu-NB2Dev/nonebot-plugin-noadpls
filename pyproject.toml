@@ -49,17 +49,17 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [[tool.poetry.source]]
-name = "清华"
+name = "tsinghua"
 url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
 priority = "primary"
 
 [[tool.poetry.source]]
-name = "阿里云"
+name = "aliyun"
 url = "https://mirrors.aliyun.com/pypi/simple/"
 priority = "primary"
 
 [[tool.poetry.source]]
-name = "豆瓣"
+name = "douban"
 url = "https://pypi.doubanio.com/simple/"
 priority = "primary"
 
