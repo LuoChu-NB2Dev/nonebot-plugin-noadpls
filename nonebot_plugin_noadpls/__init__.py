@@ -1,5 +1,3 @@
-# ruff: noqa: E402
-
 from nonebot.plugin import PluginMetadata
 
 from . import __main__ as __main__
