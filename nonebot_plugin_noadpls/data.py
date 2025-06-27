@@ -17,7 +17,7 @@ class NoticeType(str, Enum):
 
     BAN = "ban_notice"
     "禁言通知"
-
+# TODO: 枚举换typing.Literal，直接限制，也记得改存储内的枚举处理
 
 # 为NoticeType枚举定义YAML表示方法
 def enum_representer(dumper, adata):
