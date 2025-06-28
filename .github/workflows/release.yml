@@ -6,8 +6,15 @@ on:
       - v*
 
 jobs:
+  changelog:
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/changelog.yml
+
   release:
     runs-on: ubuntu-latest
+    needs: changelog
     permissions:
       id-token: write
       contents: write
@@ -18,14 +25,11 @@ jobs:
           fetch-depth: 0
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
-        env:
-          POETRY_SOURCE_DEFAULT_URL: "https://pypi.org/simple"
-          POETRY_SOURCE_DEFAULT_SECONDARY: "false"
 
       - name: Get Version
         id: version
         run: |
-          echo "VERSION=$(poetry version -s)" >> $GITHUB_OUTPUT
+          echo "VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")" >> $GITHUB_OUTPUT
           echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
@@ -46,11 +50,8 @@ jobs:
           fi
           echo "找到草稿发布: $TAG_NAME"
 
-      - name: Update changelog
-        uses: ./.github/workflows/changelog.yml
-
       - name: Build
-        run: uv build
+        run: uv build --index-url https://pypi.org/simple/
 
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
