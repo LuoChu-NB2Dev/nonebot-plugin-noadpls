@@ -6,7 +6,11 @@ on:
       - v*
 
 jobs:
+  update-changelog:
+    uses: ./.github/workflows/changelog.yml
+
   release:
+    needs: update-changelog
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -42,9 +46,6 @@ jobs:
             exit 1
           fi
           echo "找到草稿发布: $TAG_NAME"
-
-      - name: Update changelog
-        uses: ./.github/workflows/changelog.yml
 
       - name: Build
         run: uv build --index-url https://pypi.org/simple/
