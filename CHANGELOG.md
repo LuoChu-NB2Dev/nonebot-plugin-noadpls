@@ -1,28 +1,5 @@
 # 📝 更新日志
 
-<a id="v0.2.0"></a>
-## [v0.2.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.0) - 2025-06-28
-
-## Feature
-
-### Added
-- 支持分群可选是否启用插件(仅data) [`be8b6d89b7`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/be8b6d89b711209bf2495283719f02ef5d52530f)
-  - 此功能仅在data.json中可用，目前不在可配置项中提供，未设置此项的群默认不启用插件
-  - 启用插件需要bot在群聊，且具有管理权限的成员使用指令开启
-
-### Changed
-- 现在判定用户尝试管理类指令但不具备管理权限时，不再对指令进行答复 [`5c9978bf40`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/5c9978bf4050ebac7109a1990fc04c4154644d46)
-  - 此前版本会在用户不具备权限时回复`您不是这个群的管理员哦~`，如果有用户频繁使用指令可能导致机器人风控
-  - 后续预计修改成一段时间内仅进行一次不具备权限回复
-
-## CI/CD
-- 增加自动changelog更新 [`7cee04957c`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/7cee04957c0dbcc6ea1e89cc65c264fb90c447da)
-
-**Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0
-
-[Changes][v0.2.0]
-
-
 <a id="v0.2.0a1"></a>
 ## [Release 0.2.0a1 (v0.2.0a1)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.0a1) - 2025-06-07
 
@@ -69,7 +46,6 @@
 [Changes][v0.1.9]
 
 
-[v0.2.0]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0a1...v0.2.0
 [v0.2.0a1]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0a1
 [v0.1.9]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/tree/v0.1.9
 
