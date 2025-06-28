@@ -259,8 +259,8 @@ async def judge_and_ban(event: GroupMessageEvent, state: T_State, bot: Bot):
             bot_is_admin = await whether_is_admin(
                 bot, group_id, event.self_id, refresh=True
             )
-        # bot有权限且用户不是管理员且用户不是超级用户
-        if bot_is_admin and (str(user_id) not in su) and not user_is_admin:
+        # bot有权限且用户不是管理员（管理员包括群管理员、群主和超级用户）
+        if bot_is_admin and not user_is_admin:
             try:
                 await bot.set_group_ban(
                     group_id=group_id, user_id=user_id, duration=ban_time
@@ -285,8 +285,6 @@ async def judge_and_ban(event: GroupMessageEvent, state: T_State, bot: Bot):
                 state["unban_reason"] += ["bot没有权限 "]
             if user_is_admin:
                 state["unban_reason"] += ["用户是管理员 "]
-            if str(user_id) in su:
-                state["unban_reason"] += ["用户是超级用户 "]
             return
         return
 
@@ -419,6 +417,9 @@ async def whether_is_admin(
     Returns:
         bool: 是否为管理员
     """
+    # 超级用户拥有所有权限
+    if str(user_id) in su:
+        return True
     member_list = await get_group_member_list(bot, group_id, refresh)
     for member in member_list:
         if member.get("user_id") == user_id:
