@@ -6,11 +6,7 @@ on:
       - v*
 
 jobs:
-  update-changelog:
-    uses: ./.github/workflows/changelog.yml
-
   release:
-    needs: update-changelog
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -61,3 +57,7 @@ jobs:
           files: |
             dist/*.tar.gz
             dist/*.whl
+
+  update-changelog:
+    needs: release
+    uses: ./.github/workflows/changelog.yml

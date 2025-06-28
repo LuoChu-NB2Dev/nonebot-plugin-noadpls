@@ -52,4 +52,3 @@ jobs:
             git push origin HEAD:${{ github.event.repository.default_branch }}
             echo "✅ 已提交并推送更改"
           fi
-          fi
