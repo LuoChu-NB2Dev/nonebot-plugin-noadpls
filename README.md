@@ -243,25 +243,13 @@ Telegram：[@Furinature](https://t.me/Furinature)
 <!-- markdownlint-disable -->
 <!-- RELEASE_CHANGELOG_START -->
 ### 最新正式版本
-- [Release 0.2.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.0) - [v0.2.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.0) - 2025-06-28
-> # Release 0.2.0
+- [Release 0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - [v0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.1) - 2025-06-28
+> # Release 0.2.1
 >
 > ## Feature
 >
-> ### Added
-> - 支持分群可选是否启用插件(仅data) be8b6d89b711209bf2495283719f02ef5d52530f
->   - 此功能仅在data.json中可用，目前不在可配置项中提供，未设置此项的群默认不启用插件
->   - 启用插件需要bot在群聊，且具有管理权限的成员使用指令开启
->
-> ### Changed
-> - 现在判定用户尝试管理类指令但不具备管理权限时，不再对指令进行答复 5c9978bf4050ebac7109a1990fc04c4154644d46
->   - 此前版本会在用户不具备权限时回复`您不是这个群的管理员哦~`，如果有用户频繁使用指令可能导致机器人风控
->   - 后续预计修改成一段时间内仅进行一次不具备权限回复
->
-> ## CI/CD
-> - 增加自动changelog更新 7cee04957c0dbcc6ea1e89cc65c264fb90c447da
->
-> **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0
+> ### Fixed
+> - 修正管理和订阅指令超级用户不可用的问题 a659c208de76d7b520cffe1a17d72b578603c0c4
 
 <!-- RELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->

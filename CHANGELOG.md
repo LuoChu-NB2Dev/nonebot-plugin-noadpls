@@ -1,5 +1,16 @@
 # 📝 更新日志
 
+<a id="v0.2.1"></a>
+## [Release 0.2.1 (v0.2.1)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - 2025-06-28
+
+## Feature
+
+### Fixed
+- 修正管理和订阅指令超级用户不可用的问题 [`a659c208de`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/a659c208de76d7b520cffe1a17d72b578603c0c4)
+
+[Changes][v0.2.1]
+
+
 <a id="v0.2.0"></a>
 ## [Release 0.2.0 (v0.2.0)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.0) - 2025-06-28
 
@@ -17,6 +28,8 @@
 
 ## CI/CD
 - 增加自动changelog更新 [`7cee04957c`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/7cee04957c0dbcc6ea1e89cc65c264fb90c447da)
+- 从Poetry换uv管理，修复了一系列workflow问题 [`be3f97afab`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/be3f97afab2074d5dd8cbd0f6f2e7e4aaa2e83c1)...[`38a4d58ef8`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/38a4d58ef82c88eb9cc48bafed4636f833ebec2c)
+
 
 **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0
 
@@ -69,6 +82,7 @@
 [Changes][v0.1.9]
 
 
+[v0.2.1]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0a1...v0.2.0
 [v0.2.0a1]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.1.9...v0.2.0a1
 [v0.1.9]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/tree/v0.1.9
