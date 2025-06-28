@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-noadpls"
-version = "0.2.0"
+version = "0.2.1"
 description = "检测群聊中广告的插件，撤回并禁言，转发管理员"
 authors = [{ name = "gongfuture", email = "gongfuture@outlook.com" }]
 requires-python = "~=3.9"
