@@ -4,7 +4,6 @@ description: Setup Python
 
 runs:
   using: "composite"
-  runs-on: ubuntu-latest
 
   steps:
     - uses: actions/checkout@v4
@@ -16,5 +15,5 @@ runs:
       with:
         python-version-file: "pyproject.toml"
 
-    - run: uv install
+    - run: uv sync
       shell: bash
