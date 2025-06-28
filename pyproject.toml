@@ -8,12 +8,12 @@ readme = "README.md"
 license = "MIT"
 keywords = [
     "bot",
-    "qq",
     "qqbot",
     "onebotv11",
     "onebot",
     "nonebot2",
     "nonebot",
+    "luochu"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
