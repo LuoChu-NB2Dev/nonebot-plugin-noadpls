@@ -41,8 +41,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git config --local user.email "bot@luochu.cc"
+          git config --local user.name "luochu-bot"
           if git diff --quiet; then
             echo "📝 没有变更需要提交"
           else
