@@ -15,8 +15,8 @@
 _✨ 群聊发广告 哒咩~ ✨_
 
 <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
-<a href="https://poetry.eustace.io">
-  <img src="https://img.shields.io/badge/poetry-managed-blueviolet" alt="poetry-managed">
+<a href="https://docs.astral.sh/uv">
+  <img src="https://img.shields.io/badge/uv-managed-blueviolet" alt="uv-managed">
 </a>
 <a href="https://wakatime.com/badge/github/LuoChu-NB2Dev/nonebot-plugin-noadpls">
   <img src="https://wakatime.com/badge/github/LuoChu-NB2Dev/nonebot-plugin-noadpls.svg" alt="wakatime">
