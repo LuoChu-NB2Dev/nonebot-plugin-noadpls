@@ -71,7 +71,7 @@ def online_ocr(image_data: bytes, cache_key: Optional[str] = None) -> str:
     # 如果没有提供缓存键，使用图像数据的哈希值作为缓存键
     if not cache_key:
         cache_key = (
-            f"{PrefixConstants.OCR_RESULT_TEXT}{hashlib.md5(image_data).hexdigest()}"
+            f"{PrefixConstants.OCR_RESULT_TEXT}{hashlib.sha512(image_data).hexdigest()}"
         )
     try:
         text = api_paddle_ocr(image_data)

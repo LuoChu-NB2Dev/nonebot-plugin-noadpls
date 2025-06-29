@@ -50,7 +50,7 @@ class CacheManager:
             缓存文件的完整路径
         """
         # 计算文件名的哈希值，防止文件名中包含非法字符
-        hashed_name = hashlib.md5(file_name.encode()).hexdigest()
+        hashed_name = hashlib.sha512(file_name.encode()).hexdigest()
         return self.cache_dir / f"{hashed_name}.cache"
 
     def save(
