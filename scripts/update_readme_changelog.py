@@ -71,7 +71,7 @@ def format_release_content(release: dict, is_prerelease: bool = False) -> str:
     tag_url = f"{repo_url}/tree/{tag_name}"
 
     # 清理 body 内容，移除多余的空行
-    body = re.sub(r"\n\s*\n\s*\n", "\n\n", body.strip())
+    body = re.sub(r"\n(?:\s*\n){2,}", "\n\n", body.strip())
 
     # 根据是否为预发布版本添加不同的标识
     label = "### 最新预览版本" if is_prerelease else "### 最新正式版本"
