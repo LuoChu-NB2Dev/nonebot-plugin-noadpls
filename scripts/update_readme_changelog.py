@@ -34,18 +34,16 @@ def is_prerelease_version(tag: str) -> bool:
     )
 
 
-def find_latest_releases(releases: list[dict]) -> tuple[Optional[dict], Optional[dict]]:
-    """找到最新的正式版和预发布版"""
+def find_latest_releases(releases: list[dict], include_drafts: bool = False) -> tuple[Optional[dict], Optional[dict]]:
+    """处理版本列表，查找最新的正式版和预发布版"""
     latest_release = None
     latest_prerelease = None
 
     for release in releases:
-        if release["draft"]:
+        if release["draft"] and not include_drafts:
             continue
 
-        tag = release["tag_name"]
-
-        if release["prerelease"] or is_prerelease_version(tag):
+        if release["prerelease"] or is_prerelease_version(release["tag_name"]):
             if latest_prerelease is None:
                 latest_prerelease = release
         else:
@@ -145,8 +143,11 @@ def main():
     readme_path = "README.md"
     token = os.getenv("GITHUB_TOKEN")
 
+    # 检查是否在发布工作流中，如果是则包含草稿版本
+    include_drafts = os.getenv("GITHUB_WORKFLOW") == "Release"
+
     releases = get_github_releases(repo, token)
-    latest_release, latest_prerelease = find_latest_releases(releases)
+    latest_release, latest_prerelease = find_latest_releases(releases, include_drafts)
 
     update_readme_changelog(readme_path, latest_release, latest_prerelease)
 

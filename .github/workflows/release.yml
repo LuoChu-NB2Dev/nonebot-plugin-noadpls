@@ -6,12 +6,15 @@ on:
       - v*
 
 jobs:
-  release:
+  # 阶段 1: 检查阶段 - 验证所有前置条件
+  check:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
-      contents: write
-      pull-requests: write
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.VERSION }}
+      tag_version: ${{ steps.version.outputs.TAG_VERSION }}
+      tag_name: ${{ steps.version.outputs.TAG_NAME }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,6 +46,70 @@ jobs:
           fi
           echo "找到草稿发布: $TAG_NAME"
 
+  # 阶段 2: 更新日志阶段 - 更新 CHANGELOG.md 和 README.md
+  update-changelog:
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Update changelog
+        uses: rhysd/changelog-from-release/action@v3
+        with:
+          file: CHANGELOG.md
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          args: '-l 2 -d=true -p=true -i=^v0\.1\.[1-8]$ -c'
+          header: |
+            # 📝 更新日志
+
+          footer: |
+          
+            格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
+            并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+          commit: false  # 禁用自动提交
+          push: false    # 禁用自动推送
+
+      - name: Update README changelog
+        run: python scripts/update_readme_changelog.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload updated files as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-docs
+          path: |
+            CHANGELOG.md
+            README.md
+          retention-days: 1
+
+  # 阶段 3: 构建发布阶段 - 使用更新后的文档构建并发布
+  release:
+    needs: [check, update-changelog]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Python environment
+        uses: ./.github/actions/setup-python
+
+      - name: Download updated documentation
+        uses: actions/download-artifact@v4
+        with:
+          name: updated-docs
+          path: .
+
       - name: Build
         run: uv build --index-url https://pypi.org/simple/
 
@@ -52,12 +119,21 @@ jobs:
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
-          name: Release ${{ steps.version.outputs.VERSION }}
+          name: Release ${{ needs.check.outputs.version }}
           draft: false
           files: |
             dist/*.tar.gz
             dist/*.whl
 
-  update-changelog:
-    needs: release
-    uses: ./.github/workflows/changelog.yml
+      - name: Commit changelog updates
+        run: |
+          git config --local user.email "bot@luochu.cc"
+          git config --local user.name "luochu-bot"
+          if git diff --quiet; then
+            echo "📝 没有变更需要提交"
+          else
+            git add CHANGELOG.md README.md
+            git commit -m "⬆️ auto update changelog for release ${{ needs.check.outputs.version }}" -m "Changelog update was created by release workflow"
+            git push origin HEAD:${{ github.event.repository.default_branch }}
+            echo "✅ 已提交并推送更改"
+          fi
