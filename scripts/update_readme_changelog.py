@@ -34,7 +34,9 @@ def is_prerelease_version(tag: str) -> bool:
     )
 
 
-def find_latest_releases(releases: list[dict], include_drafts: bool = False) -> tuple[Optional[dict], Optional[dict]]:
+def find_latest_releases(
+    releases: list[dict], include_drafts: bool = False
+) -> tuple[Optional[dict], Optional[dict]]:
     """处理版本列表，查找最新的正式版和预发布版"""
     latest_release = None
     latest_prerelease = None
