@@ -117,7 +117,7 @@ def _load_ban_words_from_resources():
                                     )
                                     if word:
                                         all_ban_words.append(word)
-                                except:
+                                except Exception:
                                     pass
                     log.debug(f"从二进制词库 {resource.name} 加载了词")
                 except Exception as e:

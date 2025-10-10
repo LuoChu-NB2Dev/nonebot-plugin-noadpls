@@ -12,13 +12,19 @@ from nonebot_plugin_noadpls.utils.constants import PrefixConstants
 from nonebot_plugin_noadpls.utils.log import log
 
 
-def timestamp_to_utc(timestamp):
-    # 将时间戳转换为datetime对象
-    dt = datetime.datetime.fromtimestamp(timestamp)
-    # 将datetime对象转换为UTC时间
-    utc = dt.astimezone(datetime.timezone.utc)
+def timestamp_to_utc(timestamp: float) -> str:
+    """将时间戳转换为UTC时间字符串
+
+    Args:
+        timestamp: Unix时间戳
+
+    Returns:
+        格式化的UTC时间字符串
+    """
+    # 将时间戳转换为datetime对象，明确指定UTC时区
+    dt = datetime.datetime.fromtimestamp(timestamp, tz=datetime.timezone.utc)
     # 将UTC时间格式化为字符串，注意要加上时区信息Z
-    utc_str = utc.strftime("%a, %d %b %Y %H:%M:%S Z")
+    utc_str = dt.strftime("%a, %d %b %Y %H:%M:%S Z")
     return utc_str
 
 
@@ -54,7 +60,7 @@ def api_paddle_ocr(img) -> str:
     data = {"image": pic_base64.decode()}
 
     # 使用 httpx 发送同步 post 请求
-    with httpx.Client() as client:
+    with httpx.Client(timeout=30.0) as client:
         response = client.post(url, headers=headers, json=data)
         response.raise_for_status()  # 检查请求是否成功
 

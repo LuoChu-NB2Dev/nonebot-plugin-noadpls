@@ -47,7 +47,7 @@ class Log:
         function = frame.function
         return function
 
-    def _wheter_need_function(self) -> bool:
+    def _whether_need_function(self) -> bool:
         """判断是否应在日志中显示函数名 (基于全局配置的日志级别)"""
         if self.fixed_name:  # 如果名称是固定的，则不显示动态函数名
             return False
@@ -66,7 +66,7 @@ class Log:
         module_name = self._get_caller_module()
         log_method = getattr(self.logger, level)
 
-        if self._wheter_need_function():
+        if self._whether_need_function():
             function_name = self._get_caller_function()
             # 如果函数名是 '<module>' (表示在模块级别调用)，则转义尖括号以防止 Loguru 解析错误
             if function_name == "<module>":

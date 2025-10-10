@@ -271,7 +271,7 @@ class CacheManager:
                         if meta_path.exists():
                             os.remove(meta_path)
                         count += 1
-                    except:
+                    except Exception:
                         pass
 
             if count > 0:
@@ -338,7 +338,7 @@ class CacheManager:
                             valid_files += 1
                         else:
                             expired_files += 1
-                except:
+                except Exception:
                     expired_files += 1
 
             return {
