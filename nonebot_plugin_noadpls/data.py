@@ -23,9 +23,9 @@ class NoticeType(str, Enum):
 
 
 # 为NoticeType枚举定义YAML表示方法
-def enum_representer(dumper, adata):
+def enum_representer(dumper, data):
     """自定义枚举类型的YAML表示"""
-    return dumper.represent_scalar("tag:yaml.org,2002:str", adata.value)
+    return dumper.represent_scalar("tag:yaml.org,2002:str", data.value)
 
 
 # 注册表示方法

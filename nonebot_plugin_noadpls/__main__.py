@@ -157,7 +157,7 @@ async def handle_message(
                     if cache_exists(image_data_cache_key):
                         image_data = load_cache(image_data_cache_key)
                     else:
-                        async with httpx.AsyncClient() as client:
+                        async with httpx.AsyncClient(timeout=30.0) as client:
                             response = await client.get(image_url)
                             if response.status_code != 200:
                                 log.error(
@@ -428,7 +428,9 @@ async def whether_is_admin(
     return False
 
 
-async def notice_public(bot, event, groupid, status):
+async def notice_public(
+    bot: Bot, event: PrivateMessageEvent, groupid: str, status: bool
+) -> None:
     if not groupid.isdigit():
         await receive_notice_on_private.finish("请输入有效的群号")
         return
@@ -502,7 +504,12 @@ async def set_group_detect_off(
     return
 
 
-async def group_detect_public(bot, event, groupid, status):
+async def group_detect_public(
+    bot: Bot,
+    event: Union[PrivateMessageEvent, GroupMessageEvent],
+    groupid: str,
+    status: bool,
+) -> None:
     """群检测开关公共处理函数"""
     # 如果是群消息且没有提供群号，使用当前群号
     if isinstance(event, GroupMessageEvent) and not groupid:
