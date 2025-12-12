@@ -81,7 +81,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload updated files as artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: updated-docs
           path: |
@@ -105,7 +105,7 @@ jobs:
         uses: ./.github/actions/setup-python
 
       - name: Download updated documentation
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: updated-docs
           path: .
