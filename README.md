@@ -271,7 +271,7 @@ Telegram：[@Furinature](https://t.me/Furinature)
 <a href="https://ifdian.net/u/1122d426c63f11edb61c5254001e7c00">
 1212
 </a>
-<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
 <a href="https://ifdian.net/u/c35a247463a211ec953b52540025c377">
 小可爱
 </a>
@@ -283,7 +283,7 @@ W
 <a href="https://ifdian.net/u/6220a8f04d0211eda09852540025c377">
 淡淡*清香
 </a>
-<span>( 1 次赞助, 共 ￥9.9 ) 留言: </span><br>
+<span>( 2 次赞助, 共 ￥14.9 ) 留言: </span><br>
 <a href="https://ifdian.net/u/0daa55e2668811eda55c52540025c377">
 秋天的童话
 </a>
@@ -299,7 +299,7 @@ W
 <a href="https://ifdian.net/u/feceb244c29a11ebb36d52540025c377">
 语笑嫣然
 </a>
-<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
 <a href="https://ifdian.net/u/2695ae20200511efb76b52540025c377">
 Elysia
 </a>
