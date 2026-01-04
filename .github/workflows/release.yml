@@ -8,15 +8,12 @@ on:
 jobs:
   call-template:
     name: Call reusable template release
-    runs-on: ubuntu-latest
+    uses: LuoChu-NB2Dev/.github/.github/workflows/release.yml@master
     permissions:
       contents: write
       pull-requests: write
-    steps:
-      - name: Call template release workflow
-        uses: LuoChu-NB2Dev/.github/.github/workflows/release.yml@master
-        secrets:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-pypi:
     name: Publish to PyPI
