@@ -56,21 +56,6 @@ default-groups = [
     "test",
 ]
 
-[[tool.uv.index]]
-name = "tsinghua"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
-default = true
-
-[[tool.uv.index]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
-
-[[tool.uv.index]]
-name = "douban"
-url = "https://pypi.doubanio.com/simple/"
-default = true
-
 [tool.hatch.build.targets.sdist]
 include = ["nonebot_plugin_noadpls"]
 
