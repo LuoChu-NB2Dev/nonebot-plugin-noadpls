@@ -233,7 +233,7 @@ Telegram：[@Furinature](https://t.me/Furinature)
 **[赞助我](https://s.luochu.cc/afdian)**
 
 <!-- AFDIAN-ACTION:START -->
-gi
+
 <a href="https://afdian.net/u/1122d426c63f11edb61c5254001e7c00">
     <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="1212" title="1212"/>
 </a>
