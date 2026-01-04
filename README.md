@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD031 MD033 MD036 MD041 -->
+﻿<!-- markdownlint-disable MD031 MD033 MD036 MD041 -->
 
 <div align="center">
 
@@ -233,6 +233,84 @@ Telegram：[@Furinature](https://t.me/Furinature)
 **[赞助我](https://s.luochu.cc/afdian)**
 
 <!-- AFDIAN-ACTION:START -->
+gi
+<a href="https://afdian.net/u/1122d426c63f11edb61c5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="1212" title="1212"/>
+</a>
+<a href="https://afdian.net/u/c35a247463a211ec953b52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/c35a247463a211ec953b52540025c377/avatar/802caf9c0ed80b89f943750153db6185_w1080_h1439_s1118.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="小可爱" title="小可爱"/>
+</a>
+<a href="https://afdian.net/u/0043d0507f3911f09a3b5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/w/120/h/120" width="40" height="40" alt="W" title="W"/>
+</a>
+<a href="https://afdian.net/u/6220a8f04d0211eda09852540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/7c95fbc7e6bb046e78c1d86d2fd1cb77_w132_h132_s7.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="淡淡*清香" title="淡淡*清香"/>
+</a>
+<a href="https://afdian.net/u/0daa55e2668811eda55c52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/fff13d28597cf85dd2188a1e6693b5b0_w132_h132_s5.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="秋天的童话" title="秋天的童话"/>
+</a>
+<a href="https://afdian.net/u/d7aa1e6457df11ea90dd52540025c377">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_hYpM" title="爱发电用户_hYpM"/>
+</a>
+<a href="https://afdian.net/u/2211da4a79c611edb6be52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/968f6bb637e3ac071e51dae506f13bc1_w132_h132_s4.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="真" title="真"/>
+</a>
+<a href="https://afdian.net/u/feceb244c29a11ebb36d52540025c377">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-yellow.png?imageView2/1/w/120/h/120" width="40" height="40" alt="语笑嫣然" title="语笑嫣然"/>
+</a>
+<a href="https://afdian.net/u/2695ae20200511efb76b52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/2695ae20200511efb76b52540025c377/avatar/08ab107fc95da99c2ef73853f251f760_w1080_h1072_s339.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Elysia" title="Elysia"/>
+</a>
+<a href="https://afdian.net/u/d7168234386011eea05152540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/53a1e9f254be6b0901a00325c7883f01_w132_h132_s5.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Serendipity" title="Serendipity"/>
+</a>
+
+<details>
+  <summary>点我 打开/关闭 赞助者列表</summary>
+
+<a href="https://afdian.net/u/1122d426c63f11edb61c5254001e7c00">
+1212
+</a>
+<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
+<a href="https://afdian.net/u/c35a247463a211ec953b52540025c377">
+小可爱
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://afdian.net/u/0043d0507f3911f09a3b5254001e7c00">
+W
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://afdian.net/u/6220a8f04d0211eda09852540025c377">
+淡淡*清香
+</a>
+<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
+<a href="https://afdian.net/u/0daa55e2668811eda55c52540025c377">
+秋天的童话
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://afdian.net/u/d7aa1e6457df11ea90dd52540025c377">
+爱发电用户_hYpM
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://afdian.net/u/2211da4a79c611edb6be52540025c377">
+真
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://afdian.net/u/feceb244c29a11ebb36d52540025c377">
+语笑嫣然
+</a>
+<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
+<a href="https://afdian.net/u/2695ae20200511efb76b52540025c377">
+Elysia
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: 看看腿喵</span><br>
+<a href="https://afdian.net/u/d7168234386011eea05152540025c377">
+Serendipity
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+
+</details>
+<!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
 <!-- AFDIAN-ACTION:END -->
 
 感谢大家的赞助！你们的赞助将是我继续创作的动力！
