@@ -1,4 +1,4 @@
-name: afdian-sync
+name: Afdian Sync
 
 on:
   schedule: # Run workflow automatically
@@ -8,7 +8,7 @@ on:
 jobs:
   call-afdian-action:
     name: Call reusable afdian action workflow
-    uses: LuoChu-NB2Dev/.github/.github/workflows/afdian-action.yml@master
+    uses: LuoChu-NB2Dev/.github/.github/workflows/afdian-sync.yml@master
     permissions:
       contents: write
       pull-requests: write

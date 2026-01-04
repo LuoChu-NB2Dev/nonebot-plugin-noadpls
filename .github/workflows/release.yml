@@ -12,8 +12,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-pypi:
     name: Publish to PyPI
