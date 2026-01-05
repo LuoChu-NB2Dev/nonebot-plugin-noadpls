@@ -33,5 +33,5 @@ jobs:
       - name: List downloaded files
         run: ls -l ./dist
 
-      - name: Publish a Python distribution to PyPI
+      - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
