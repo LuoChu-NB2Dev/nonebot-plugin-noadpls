@@ -1,25 +1,25 @@
-name: Release
+name: Test Release
 
 on:
   push:
     tags:
-      - 'v*'
+      - 't*'
 
 jobs:
   call-template:
-    name: Call reusable template release
-    uses: LuoChu-NB2Dev/.github/.github/workflows/release.yml@master
+    name: Call reusable template test release
+    uses: LuoChu-NB2Dev/.github/.github/workflows/testrelease.yml@master
     permissions:
       contents: write
       pull-requests: write
 
-  publish-pypi:
-    name: Publish to PyPI
+  publish-testpypi:
+    name: Publish to TestPyPI
     runs-on: ubuntu-latest
     needs: call-template
     environment:
-      name: pypi
-      url: https://pypi.org/p/nonebot-plugin-noadpls/
+      name: testpypi
+      url: https://test.pypi.org/p/nonebot-plugin-noadpls/
     permissions:
       id-token: write
       contents: write
@@ -33,5 +33,7 @@ jobs:
       - name: List downloaded files
         run: ls -l ./dist
 
-      - name: Publish package distributions to PyPI
+      - name: Publish package distributions to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1.13
+        with:
+          repository-url: https://test.pypi.org/legacy/

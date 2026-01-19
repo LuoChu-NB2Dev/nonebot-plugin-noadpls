@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD031 MD033 MD036 MD041 -->
+﻿<!-- markdownlint-disable MD031 MD033 MD036 MD041 -->
 
 <div align="center">
 
@@ -14,7 +14,7 @@
 
 _✨ 群聊发广告 哒咩~ ✨_
 
-<img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
+<img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="python">
 <a href="https://docs.astral.sh/uv">
   <img src="https://img.shields.io/badge/uv-managed-blueviolet" alt="uv-managed">
 </a>
@@ -230,7 +230,88 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 ## 💰 赞助
 
-**[赞助我](https://afdian.com/a/luochu)**
+**[赞助我](https://s.luochu.cc/afdian)**
+
+<!-- AFDIAN-ACTION:START -->
+
+<a href="https://ifdian.net/u/1122d426c63f11edb61c5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="1212" title="1212"/>
+</a>
+<a href="https://ifdian.net/u/c35a247463a211ec953b52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/c35a247463a211ec953b52540025c377/avatar/802caf9c0ed80b89f943750153db6185_w1080_h1439_s1118.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="小可爱" title="小可爱"/>
+</a>
+<a href="https://ifdian.net/u/0043d0507f3911f09a3b5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-purple.png?imageView2/1/w/120/h/120" width="40" height="40" alt="W" title="W"/>
+</a>
+<a href="https://ifdian.net/u/6220a8f04d0211eda09852540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/7c95fbc7e6bb046e78c1d86d2fd1cb77_w132_h132_s7.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="淡淡*清香" title="淡淡*清香"/>
+</a>
+<a href="https://ifdian.net/u/0daa55e2668811eda55c52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/fff13d28597cf85dd2188a1e6693b5b0_w132_h132_s5.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="秋天的童话" title="秋天的童话"/>
+</a>
+<a href="https://ifdian.net/u/d7aa1e6457df11ea90dd52540025c377">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" height="40" alt="爱发电用户_hYpM" title="爱发电用户_hYpM"/>
+</a>
+<a href="https://ifdian.net/u/2211da4a79c611edb6be52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/968f6bb637e3ac071e51dae506f13bc1_w132_h132_s4.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="真" title="真"/>
+</a>
+<a href="https://ifdian.net/u/feceb244c29a11ebb36d52540025c377">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-yellow.png?imageView2/1/w/120/h/120" width="40" height="40" alt="语笑嫣然" title="语笑嫣然"/>
+</a>
+<a href="https://ifdian.net/u/2695ae20200511efb76b52540025c377">
+    <img src="https://pic1.afdiancdn.com/user/2695ae20200511efb76b52540025c377/avatar/08ab107fc95da99c2ef73853f251f760_w1080_h1072_s339.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Elysia" title="Elysia"/>
+</a>
+<a href="https://ifdian.net/u/d7168234386011eea05152540025c377">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/53a1e9f254be6b0901a00325c7883f01_w132_h132_s5.jpeg?imageView2/1/w/120/h/120" width="40" height="40" alt="Serendipity" title="Serendipity"/>
+</a>
+
+<details>
+  <summary>点我 打开/关闭 赞助者列表</summary>
+
+<a href="https://ifdian.net/u/1122d426c63f11edb61c5254001e7c00">
+1212
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/c35a247463a211ec953b52540025c377">
+小可爱
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/0043d0507f3911f09a3b5254001e7c00">
+W
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/6220a8f04d0211eda09852540025c377">
+淡淡*清香
+</a>
+<span>( 2 次赞助, 共 ￥14.9 ) 留言: </span><br>
+<a href="https://ifdian.net/u/0daa55e2668811eda55c52540025c377">
+秋天的童话
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/d7aa1e6457df11ea90dd52540025c377">
+爱发电用户_hYpM
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/2211da4a79c611edb6be52540025c377">
+真
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/feceb244c29a11ebb36d52540025c377">
+语笑嫣然
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+<a href="https://ifdian.net/u/2695ae20200511efb76b52540025c377">
+Elysia
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: 看看腿喵</span><br>
+<a href="https://ifdian.net/u/d7168234386011eea05152540025c377">
+Serendipity
+</a>
+<span>( 1 次赞助, 共 ￥5 ) 留言: </span><br>
+
+</details>
+<!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
+<!-- AFDIAN-ACTION:END -->
 
 感谢大家的赞助！你们的赞助将是我继续创作的动力！
 
@@ -243,19 +324,41 @@ Telegram：[@Furinature](https://t.me/Furinature)
 <!-- markdownlint-disable -->
 <!-- RELEASE_CHANGELOG_START -->
 ### 最新正式版本
-- [Release 0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - [v0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.1) - 2025-06-28
+- [Release 0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - [v0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.1) - 2025-06-29
 > # Release 0.2.1
 >
 > ## Feature
 >
 > ### Fixed
 > - 修正管理和订阅指令超级用户不可用的问题 a659c208de76d7b520cffe1a17d72b578603c0c4
+>
+> **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0...v0.2.1
 
 <!-- RELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->
 
 <!-- markdownlint-disable -->
 <!-- PRERELEASE_CHANGELOG_START -->
+### 最新预览版本
+- [Release 0.4.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/untagged-2249dc5b1756ae8f3bbf) - [v0.4.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.4.0) - 2026-01-19
+> # Release 0.4.0
+>
+> > [!WARNING]
+> > ## 破坏性变更 | BREAKING CHANGE
+> > 由于依赖安全性问题，不再支持Python 3.9
+> > 目前 **最低版本Python 3.10**
+>
+> # 当前版本与上一版本无功能变更，Python3.9用户请勿更新此版本
+>
+> ## CI/CD
+> - 发布工作流整合入组织仓库 87b901e4949a7473e724a510ce324bf21e8f88df
+> - 增加爱发电打赏用户感谢列表 87b901e4949a7473e724a510ce324bf21e8f88df
+>
+> ## Dependence
+> - 更新Python最低版本为3.10 9a30fb3f16b24ecc632d47c2008a9bdbd98e0e1f
+> - 更新了一堆依赖 #37 #38 #39 #40 #41 #42 
+>
+> **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.1...v0.4.0
 
 <!-- PRERELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->
