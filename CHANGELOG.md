@@ -1,7 +1,7 @@
 # 📝 更新日志
 
 <a id="v0.4.0"></a>
-## [v0.4.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.4.0) - 2026-01-19
+## [Release 0.4.0(v0.4.0)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.4.0) - 2026-01-19
 
 > [!WARNING]
 > ## 破坏性变更 | BREAKING CHANGE
