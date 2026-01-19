@@ -324,19 +324,41 @@ Serendipity
 <!-- markdownlint-disable -->
 <!-- RELEASE_CHANGELOG_START -->
 ### 最新正式版本
-- [Release 0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - [v0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.1) - 2025-06-28
+- [Release 0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.2.1) - [v0.2.1](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.2.1) - 2025-06-29
 > # Release 0.2.1
 >
 > ## Feature
 >
 > ### Fixed
 > - 修正管理和订阅指令超级用户不可用的问题 a659c208de76d7b520cffe1a17d72b578603c0c4
+>
+> **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0...v0.2.1
 
 <!-- RELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->
 
 <!-- markdownlint-disable -->
 <!-- PRERELEASE_CHANGELOG_START -->
+### 最新预览版本
+- [v0.4.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/untagged-2249dc5b1756ae8f3bbf) - [v0.4.0](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tree/v0.4.0) - 2026-01-19
+> # v0.4.0
+>
+> > [!WARNING]
+> > ## 破坏性变更 | BREAKING CHANGE
+> > 由于依赖安全性问题，不再支持Python 3.9
+> > 目前 **最低版本Python 3.10**
+>
+> # 当前版本与上一版本无功能变更，Python3.9用户请勿更新此版本
+>
+> ## CI/CD
+> - 发布工作流整合入组织仓库 87b901e4949a7473e724a510ce324bf21e8f88df
+> - 增加爱发电打赏用户感谢列表 87b901e4949a7473e724a510ce324bf21e8f88df
+>
+> ## Dependence
+> - 更新Python最低版本为3.10 9a30fb3f16b24ecc632d47c2008a9bdbd98e0e1f
+> - 更新了一堆依赖 #37 #38 #39 #40 #41 #42 
+>
+> **Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.1...v0.4.0
 
 <!-- PRERELEASE_CHANGELOG_END -->
 <!-- markdownlint-enable -->
