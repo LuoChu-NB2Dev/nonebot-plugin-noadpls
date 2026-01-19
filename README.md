@@ -14,7 +14,7 @@
 
 _✨ 群聊发广告 哒咩~ ✨_
 
-<img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="python">
+<img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="python">
 <a href="https://docs.astral.sh/uv">
   <img src="https://img.shields.io/badge/uv-managed-blueviolet" alt="uv-managed">
 </a>
