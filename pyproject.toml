@@ -45,7 +45,7 @@ dev = [
 ]
 test = [
     "nonebug>=0.4.3,<0.5",
-    "pytest-asyncio>=0.25.3,<0.26",
+    "pytest-asyncio>=0.25.3,<1.3",
     "pytest-cov>=6.0.0,<7",
     "pytest-xdist>=3.6.1,<4",
 ]
