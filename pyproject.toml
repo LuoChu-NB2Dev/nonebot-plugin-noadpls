@@ -40,7 +40,7 @@ Repository = "https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls"
 [dependency-groups]
 dev = [
     "nonebot2[fastapi,httpx,websockets]>=2.4.1,<3",
-    "ruff>=0.11.4,<0.15",
+    "ruff>=0.11.4,<0.16",
     "pre-commit>=4.2.0,<5",
 ]
 test = [
