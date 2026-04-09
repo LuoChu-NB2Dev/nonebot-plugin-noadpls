@@ -1179,18 +1179,17 @@ websockets = [
 
 [[package]]
 name = "nonebug"
-version = "0.4.3"
+version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "async-asgi-testclient" },
     { name = "nonebot2" },
     { name = "pytest" },
-    { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/03/56/daff5deb1f74123c3c026d9e7626a32088f11a8c295da4c06518ff9dba2d/nonebug-0.4.3.tar.gz", hash = "sha256:e9592d2c7a42b76f4a336f98726cba92e1300f6bab155c8822e865919786f10c", size = 12112, upload-time = "2024-12-07T13:23:52.216Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d2/15/15b438080a56ddd79e5f258728a4f36ba6ced30e2f08293eebcbc4f60474/nonebug-0.4.4.tar.gz", hash = "sha256:694bebcac66e295f5cf75e3f11a869049365f4979870aa0f5521a0205efe956d", size = 10407, upload-time = "2026-04-01T03:47:11.8Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/bf/d2b4fe6d037eea307c446af70567545da5fabd1da407b0e3665800751e7f/nonebug-0.4.3-py3-none-any.whl", hash = "sha256:eb9b2c8ab3d45459a4f00ebdaae90729e9e9628575c0685fca4c871dd4cfd425", size = 15016, upload-time = "2024-12-07T13:23:50.209Z" },
+    { url = "https://files.pythonhosted.org/packages/26/46/9e1be80866f9f7283b553c53f74b083cb720ffcdafc7392015a0d6b039a9/nonebug-0.4.4-py3-none-any.whl", hash = "sha256:0bbd3ea2147b2d213fca41755aa16493159f900f53d65d284a4d3517b2e4dd10", size = 14766, upload-time = "2026-04-01T03:47:12.588Z" },
 ]
 
 [[package]]
