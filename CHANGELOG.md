@@ -1,7 +1,30 @@
 # 📝 更新日志
 
+<a id="v0.4.1"></a>
+## [Release 0.4.1 (v0.4.1)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.4.1) - 2026-04-19
+
+> [!WARNING]
+> ## 破坏性变更 | BREAKING CHANGE
+> 由于NoneBot以及依赖问题，不再支持Python 3.9
+> 目前 **最低版本Python 3.10**
+
+# 当前版本与上一版本无功能变更，未升级至 `Nonebot v2.5.0` 或仍在使用 `Python 3.9` 的用户请勿更新此版本
+
+## CI/CD
+- 发布工作流整合入组织仓库 [`87b901e494`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/87b901e4949a7473e724a510ce324bf21e8f88df)
+- 增加爱发电打赏用户感谢列表 [`87b901e494`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/87b901e4949a7473e724a510ce324bf21e8f88df)
+
+## Dependence
+- 更新Python最低版本为3.10 [`9a30fb3f16`](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/commit/9a30fb3f16b24ecc632d47c2008a9bdbd98e0e1f)
+- 更新了一堆依赖
+
+**Full Changelog**: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.1...v0.4.1
+
+[Changes][v0.4.1]
+
+
 <a id="v0.4.0"></a>
-## [Release 0.4.0(v0.4.0)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.4.0) - 2026-01-19
+## [Release 0.4.0 (v0.4.0)](https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/releases/tag/v0.4.0) - 2026-01-19
 
 > [!WARNING]
 > ## 破坏性变更 | BREAKING CHANGE
@@ -108,6 +131,7 @@
 [Changes][v0.1.9]
 
 
+[v0.4.1]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.4.0...v0.4.1
 [v0.4.0]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.1...v0.4.0
 [v0.2.1]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0...v0.2.1
 [v0.2.0]: https://github.com/LuoChu-NB2Dev/nonebot-plugin-noadpls/compare/v0.2.0a1...v0.2.0
