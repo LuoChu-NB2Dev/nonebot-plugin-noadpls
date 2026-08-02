@@ -234,6 +234,9 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 <!-- AFDIAN-ACTION:START -->
 
+<a href="https://ifdian.net/u/6acb972489a511f1a4ae5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" alt="qq" title="qq"/>
+</a>
 <a href="https://ifdian.net/u/12fac1c6771811ed8ad552540025c377">
     <img src="https://pic1.afdiancdn.com/default/avatar/avatar-yellow.png?imageView2/1/w/120/h/120" width="40" alt="爱发电用户_Kmaj" title="爱发电用户_Kmaj"/>
 </a>
@@ -271,6 +274,10 @@ Telegram：[@Furinature](https://t.me/Furinature)
 <details>
   <summary>点我 打开/关闭 赞助者列表</summary>
 
+<a href="https://ifdian.net/u/6acb972489a511f1a4ae5254001e7c00">
+qq
+</a>
+<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
 <a href="https://ifdian.net/u/12fac1c6771811ed8ad552540025c377">
 爱发电用户_Kmaj
 </a>
