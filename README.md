@@ -234,6 +234,9 @@ Telegram：[@Furinature](https://t.me/Furinature)
 
 <!-- AFDIAN-ACTION:START -->
 
+<a href="https://ifdian.net/u/677c0faea41711f18ffb5254001e7c00">
+    <img src="https://pic1.afdiancdn.com/user/user_upload_osl/41558b7b543065d29e6dd3402ebaf122_w132_h132_s3.jpeg?imageView2/1/w/120/h/120" width="40" alt="田嫣红" title="田嫣红"/>
+</a>
 <a href="https://ifdian.net/u/6acb972489a511f1a4ae5254001e7c00">
     <img src="https://pic1.afdiancdn.com/default/avatar/avatar-blue.png?imageView2/1/w/120/h/120" width="40" alt="qq" title="qq"/>
 </a>
@@ -274,6 +277,10 @@ Telegram：[@Furinature](https://t.me/Furinature)
 <details>
   <summary>点我 打开/关闭 赞助者列表</summary>
 
+<a href="https://ifdian.net/u/677c0faea41711f18ffb5254001e7c00">
+田嫣红
+</a>
+<span>( 0 次赞助, 共 ￥0 ) 留言: </span><br>
 <a href="https://ifdian.net/u/6acb972489a511f1a4ae5254001e7c00">
 qq
 </a>
